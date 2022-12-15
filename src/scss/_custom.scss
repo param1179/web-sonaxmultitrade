@@ -1,0 +1,48 @@
+// Here you can add other styles
+.btn-primary {
+  background-color: #e55353;
+  border-color: #e55353;
+}
+.btn.btn-primary:hover {
+  background-color: #e55353;
+  border: none;
+}
+.btn.btn-primary:hover::after {
+  background-color: #e55353;
+}
+.btn.btn-primary:active {
+  background-color: #e55353;
+  border-color: #e55353;
+}
+.btn.btn-primary:focus {
+  background-color: #e55353;
+  border-color: #e55353;
+  box-shadow: 0 0 0 0.25rem rgb(239 96 96 / 87%);
+}
+.btn.btn-primary:active:focus,
+.btn.btn-primary.show:focus {
+  box-shadow: 0 0 0 0.25rem rgb(239 96 96 / 87%);
+}
+button:focus:not(:focus-visible) {
+  outline: 0;
+}
+
+.img-circule-bg {
+  background: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+.img-circule {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+.myTable {
+  position: absolute;
+}
+.table-row {
+  min-height: 55vh;
+  position: relative;
+}
