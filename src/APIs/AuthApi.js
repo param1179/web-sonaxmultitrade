@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 //helpers
 import { TokenLS } from '../helpers'
 
-const fetchSignIn = async (body) => await axios.post('admin/signIn', body)
+const fetchSignIn = async (body) => await axios.put('admin/login', body)
 
 export const useSignIn = (setErrors) => {
   const navigate = useNavigate()

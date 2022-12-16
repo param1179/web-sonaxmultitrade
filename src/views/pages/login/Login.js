@@ -9,6 +9,7 @@ import {
   CContainer,
   CForm,
   CFormInput,
+  CImage,
   CInputGroup,
   CInputGroupText,
   CRow,
@@ -19,6 +20,7 @@ import { authSchema } from 'src/validators'
 import { useFormik } from 'formik'
 import { authApi } from 'src/APIs'
 import { getToken } from 'src/helpers/tokenLS'
+import brand from 'src/assets/sonaxmultitrade.png'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -102,11 +104,9 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Medsembly Admim</h2>
-                    <p>
-                      Medsembly Is The Premier Network Bringing Students And Professionals Together
-                      Under One Community
-                    </p>
+                    <h2>Sonax Multitrade</h2>
+                    <CImage src={brand} width="200" />
+                    <p>We understand your world</p>
                     {/* <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
                         Register Now!

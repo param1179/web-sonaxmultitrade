@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
+import { CImage, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
 
 // import { logoNegative } from 'src/assets/brand/logo-negative'
-import logoNegativ from 'src/assets/brand/favicon.svg'
+import logoNegativ from 'src/assets/brand/sonaxmultitrade.svg'
 import { sygnet } from 'src/assets/brand/sygnet'
 
 import SimpleBar from 'simplebar-react'
@@ -17,6 +17,7 @@ import 'simplebar/dist/simplebar.min.css'
 import navigation from '../_nav'
 import { commonSelector } from 'src/redux'
 import { changeState } from 'src/redux/slices/common'
+import brand from 'src/assets/sonaxmultitrade.png'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -24,6 +25,7 @@ const AppSidebar = () => {
   const vars = {
     '--cui-sidebar-nav-link-hover-bg': '#f11a2e73',
     '--cui-sidebar-nav-link-active-bg': '#f11a2e',
+    '--cui-sidebar-bg': '#333232',
   }
 
   return (
@@ -38,9 +40,8 @@ const AppSidebar = () => {
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
         {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
-        <div className="">
-          <img alt="Logo" width={'70'} src={logoNegativ} />
-        </div>
+        <CImage src={brand} width="70" />
+        Sonax Multitrade
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
       </CSidebarBrand>
       <CSidebarNav>

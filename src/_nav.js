@@ -39,6 +39,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Add New User',
+    to: '/add',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'All Users',
     to: '/users',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
@@ -59,16 +65,16 @@ const _nav = [
     to: '/coupons',
     icon: <CIcon icon={cilLibrary} customClassName="nav-icon" />,
   },
-  {
-    component: CNavTitle,
-    name: 'Schools',
-  },
-  {
-    component: CNavItem,
-    name: 'Schools',
-    to: '/schools',
-    icon: <CIcon icon={cilSchool} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavTitle,
+  //   name: 'Schools',
+  // },
+  // {
+  //   component: CNavItem,
+  //   name: 'Schools',
+  //   to: '/schools',
+  //   icon: <CIcon icon={cilSchool} customClassName="nav-icon" />,
+  // },
   // {
   //   component: CNavTitle,
   //   name: 'Theme',
