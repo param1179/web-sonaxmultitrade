@@ -59,10 +59,10 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
 
-  { path: '/users', name: 'Users', element: Users },
+  { path: '/users', name: 'Users', element: AddUser },
   { path: '/add', name: 'Add User', element: AddUser },
-  { path: '/activities', name: 'Users Activities', element: Activities },
-  { path: '/coupons', name: 'Coupons', element: Coupons },
+  { path: '/activities', name: 'Users Activities', element: AddUser },
+  { path: '/coupons', name: 'Coupons', element: AddUser },
   // { path: '/schools', name: 'Schools', element: Schools },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },

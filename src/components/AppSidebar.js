@@ -5,9 +5,6 @@ import { CImage, CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler } from '@
 import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
-
-// import { logoNegative } from 'src/assets/brand/logo-negative'
-import logoNegativ from 'src/assets/brand/sonaxmultitrade.svg'
 import { sygnet } from 'src/assets/brand/sygnet'
 
 import SimpleBar from 'simplebar-react'
@@ -39,7 +36,6 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        {/* <CIcon className="sidebar-brand-full" icon={logoNegative} height={35} /> */}
         <CImage src={brand} width="70" />
         Sonax Multitrade
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />

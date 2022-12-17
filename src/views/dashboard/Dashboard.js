@@ -45,7 +45,7 @@ const Dashboard = () => {
         </div> */}
       </CRow>
       <CRow>
-        {resp?.data.statistic.map((item, i) => (
+        {resp?.data?.statistic.map((item, i) => (
           <CCol key={i} xs={3}>
             <CWidgetStatsC
               className="mb-3 mt-3"

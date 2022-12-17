@@ -32,7 +32,7 @@ const Login = () => {
     }
   }, [])
 
-  const { values, handleChange, submitForm, errors, setErrors } = useFormik({
+  const { values, handleChange, submitForm, errors, setErrors, isValid, dirty } = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -67,6 +67,7 @@ const Login = () => {
                         error={errors.email}
                       />
                     </CInputGroup>
+                    {errors && <p className="text-danger">{errors.email}</p>}
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
                         <CIcon icon={cilLockLocked} />
@@ -81,13 +82,14 @@ const Login = () => {
                         error={errors.password}
                       />
                     </CInputGroup>
+                    {errors && <p className="text-danger">{errors.password}</p>}
                     <CRow>
                       <CCol xs={6}>
                         <CButton
                           color="primary"
                           className="px-4"
                           onClick={submitForm}
-                          disabled={isLoading}
+                          disabled={!(isValid && dirty) || isLoading}
                         >
                           Login
                         </CButton>
@@ -107,11 +109,6 @@ const Login = () => {
                     <h2>Sonax Multitrade</h2>
                     <CImage src={brand} width="200" />
                     <p>We understand your world</p>
-                    {/* <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
-                      </CButton>
-                    </Link> */}
                   </div>
                 </CCardBody>
               </CCard>

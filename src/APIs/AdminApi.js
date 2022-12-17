@@ -19,6 +19,7 @@ const fetchDeleteAdmin = async (id) => await axios.delete(`admin/delete/${id}`)
 const fetchDeleteCoupon = async (id) => await axios.delete(`admin/coupon/${id}`)
 
 const fetchCreateAdmin = async (body) => await axios.post('admin/create', body)
+const fetchCreateAdminUser = async (body) => await axios.post('admin/users/add', body)
 const fetchCreateSchool = async (body) => await axios.post('admin/schools', body)
 const fetchCreateCoupon = async (body) => await axios.post('admin/coupon', body)
 
@@ -77,6 +78,16 @@ export const useDeleteCoupon = () => {
 
 export const useCreateAdmin = (setErrors) => {
   return useMutation(fetchCreateAdmin, {
+    onError: (error) => {
+      if (error?.status === 400) {
+        setErrors({ email: error.message })
+      }
+    },
+  })
+}
+
+export const useCreateAdminUser = (setErrors) => {
+  return useMutation(fetchCreateAdminUser, {
     onError: (error) => {
       if (error?.status === 400) {
         setErrors({ email: error.message })

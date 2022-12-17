@@ -12,6 +12,7 @@ const commonSlice = createSlice({
     profile: null,
     loaded: true,
     sidebarShow: true,
+    sidebarUnfoldable: true,
   },
   reducers: {
     logout: () => {},
