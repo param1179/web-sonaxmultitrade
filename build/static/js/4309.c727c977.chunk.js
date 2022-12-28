@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksonaxmultitrade=self.webpackChunksonaxmultitrade||[]).push([[4309],{64309:function(n,e,r){r.r(e);r(72791);var s=r(78983),a=(r(24846),r(9724),r(80184));e.default=function(){return(0,a.jsx)(a.Fragment,{children:(0,a.jsx)(s.rb,{children:(0,a.jsx)(s.b7,{xs:12,children:(0,a.jsx)(s.PO,{children:"Admin Dashboard"})})})})}}}]);
+//# sourceMappingURL=4309.c727c977.chunk.js.map
