@@ -1,13 +1,13 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import { cilGraph, cilLibrary, cilPeople, cilSpeedometer } from '@coreui/icons'
-import { CNavItem, CNavTitle } from '@coreui/react'
+import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
-const _nav = [
+const _navAdmin = [
   {
     component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
+    name: 'Dashboard Admin',
+    to: '/dashboardAdmin',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
       color: 'info',
@@ -20,8 +20,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Add New User',
-    to: '/add',
+    name: 'Admin Add New User',
+    to: '/adminAdd',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
@@ -32,4 +32,4 @@ const _nav = [
   },
 ]
 
-export default _nav
+export default _navAdmin

@@ -6,7 +6,7 @@ import { logout } from '../redux/slices/common'
 //helpers
 import { TokenLS } from '../helpers'
 
-const fetchStatistics = async () => await axios.get('admin/statistics')
+const fetchProfile = async () => await axios.get('users/profile')
 
 const fetchAdmins = async () => await axios.get('admin/gets')
 
@@ -19,7 +19,7 @@ const fetchDeleteAdmin = async (id) => await axios.delete(`admin/delete/${id}`)
 const fetchDeleteCoupon = async (id) => await axios.delete(`admin/coupon/${id}`)
 
 const fetchCreateAdmin = async (body) => await axios.post('admin/create', body)
-const fetchCreateAdminUser = async (body) => await axios.post('admin/users/add', body)
+const fetchCreateAdminUser = async (body) => await axios.post('users/add', body)
 const fetchCreateSchool = async (body) => await axios.post('admin/schools', body)
 const fetchCreateCoupon = async (body) => await axios.post('admin/coupon', body)
 
@@ -30,12 +30,16 @@ const fetchLogOut = async () => await axios.get('admin/logOut')
 export const fetchManage = async (type, page, search) =>
   await axios.get(`admin/users/${type}?page=${page}&email=${search}`)
 
+const fetchUsers = async (limit, page, search) =>
+  await axios.get(`admin/users/get?page=${page}&limit=${limit}&search=${search}`)
+
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
+const fetchPackages = async () => await axios.get(`users/packages`)
 
 const fetchDeleteUser = async (id) => await axios.delete(`admin/deleteUser/${id}`)
 
-export const useStatistics = () => {
-  return useQuery('get/statistics', fetchStatistics, {
+export const useProfile = () => {
+  return useQuery('users/profile', fetchProfile, {
     refetchOnWindowFocus: false,
   })
 }
@@ -133,6 +137,18 @@ export const useLogOut = () => {
 
 export const useManage = (type, page, search) => {
   return useQuery(`get/${type}/${page}/${search}`, () => fetchManage(type, page, search), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetUsers = (limit, page, search) => {
+  return useQuery(`admin/users/${page}/${limit}/${search}`, () => fetchUsers(limit, page, search), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetPackages = (limit, page, search) => {
+  return useQuery(`users/packages`, () => fetchPackages(), {
     refetchOnWindowFocus: false,
   })
 }

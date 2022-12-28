@@ -16,47 +16,101 @@ import { cilDollar, cilPeople } from '@coreui/icons'
 import { adminApi } from 'src/APIs'
 
 const Dashboard = () => {
-  const { isLoading, data: resp } = adminApi.useStatistics()
+  const { isLoading, data: resp } = adminApi.useProfile()
 
   return (
     <>
       <CRow>
         <CCol xs={12}>
           <CRow>
-            <CCard>
-              <CCardHeader>
-                <strong>Medsembly Dashboard</strong>
-              </CCardHeader>
-              <CCardBody>
-                Medsembly Is The Premier Network Bringing Students And Professionals Together Under
-                One Community
-              </CCardBody>
-            </CCard>
+            <CCol xs={4}>
+              <CCard>
+                <CCardHeader>
+                  <strong>User&apos;s Details</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CRow>
+                    <CCol>UID:</CCol>
+                    <CCol>{resp?.data.uId}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Full Name:</CCol>
+                    <CCol>
+                      {resp?.data.firstName} {resp?.data.lastName}
+                    </CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Mobile Number:</CCol>
+                    <CCol>+91 {resp?.data.mobile}</CCol>
+                  </CRow>
+                  <hr />
+                </CCardBody>
+              </CCard>
+            </CCol>
+            <CCol xs={4}>
+              <CCard>
+                <CCardHeader>
+                  <strong>User&apos;s Address</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CRow>
+                    <CCol>Hno./Vill/PO:</CCol>
+                    <CCol>{resp?.data.locality}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>City:</CCol>
+                    <CCol>{resp?.data.city}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>District:</CCol>
+                    <CCol>{resp?.data.district}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>State:</CCol>
+                    <CCol>{resp?.data.state}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Area Pin:</CCol>
+                    <CCol>{resp?.data.pin}</CCol>
+                  </CRow>
+                  <hr />
+                </CCardBody>
+              </CCard>
+            </CCol>
+            <CCol xs={4}>
+              <CCard>
+                <CCardHeader>
+                  <strong>User&apos;s Nominee</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CRow>
+                    <CCol>Full Name:</CCol>
+                    <CCol>
+                      {resp?.data?.nominee?.firstName} {resp?.data?.nominee?.lastName}
+                    </CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Date of birth:</CCol>
+                    <CCol>{resp?.data?.nominee.dob}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Relation:</CCol>
+                    <CCol>{resp?.data?.nominee.relation}</CCol>
+                  </CRow>
+                  <hr />
+                </CCardBody>
+              </CCard>
+            </CCol>
           </CRow>
         </CCol>
-        {/* <div className="clearfix">
-          <CImage
-            className="rounded-circle mt-5 bg-dark"
-            align="center"
-            src={'/static/media/favicon.b9135d337a3bf35494052799fdf069cc.svg'}
-            width={200}
-            height={200}
-          />
-        </div> */}
-      </CRow>
-      <CRow>
-        {resp?.data?.statistic.map((item, i) => (
-          <CCol key={i} xs={3}>
-            <CWidgetStatsC
-              className="mb-3 mt-3"
-              icon={<CIcon icon={i === 3 ? cilDollar : cilPeople} height={36} />}
-              progress={{ color: 'success', value: 100 }}
-              text="Widget helper text"
-              title={item.title}
-              value={item.value}
-            />
-          </CCol>
-        ))}
       </CRow>
     </>
   )

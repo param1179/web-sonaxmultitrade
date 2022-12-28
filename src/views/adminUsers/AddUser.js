@@ -15,7 +15,6 @@ import {
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
 import { adminApi } from 'src/APIs'
-import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
 const vars = {
   '--cui-header-bg': '#E4e4e4',
@@ -23,14 +22,12 @@ const vars = {
 
 const AddUser = () => {
   const [isSponser, setIsSponsered] = useState(false)
-  const user = getProfileData()
-  const { isLoading, data: packages } = adminApi.useGetPackages()
 
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
       initialValues: {
-        sponserId: user && user._id,
-        packageId: packages?.data[0]._id,
+        sponser: 'No',
+        sponserId: '',
         placement: 'Left',
         firstName: '',
         lastName: '',
@@ -46,6 +43,7 @@ const AddUser = () => {
         nomineeLastName: '',
         nomineeDob: '',
         nomineeRelation: '',
+        plan: '',
         locality: '',
         city: '',
         district: '',
@@ -66,6 +64,10 @@ const AddUser = () => {
     }
   }
 
+  const isSponsered = (event) => {
+    event.target.value === 'Yes' ? setIsSponsered(true) : setIsSponsered(false)
+  }
+
   return (
     <CRow>
       <CCol xs={12}>
@@ -83,7 +85,7 @@ const AddUser = () => {
                         <CHeader style={vars} className="mb-3">
                           <strong>Sponser&apos;s Details</strong>
                         </CHeader>
-                        {/* <CCol md={6}>
+                        <CCol md={6}>
                           <div className="mb-3">
                             <CFormLabel htmlFor="exampleFormControlInput1">Sponsered</CFormLabel>
                             <CFormCheck
@@ -105,47 +107,49 @@ const AddUser = () => {
                               defaultChecked={values.sponser === 'No'}
                             />
                           </div>
-                        </CCol> */}
-                        <CCol md={6}>
-                          <div className="mb-3">
-                            <CFormLabel htmlFor="exampleFormControlInput1">
-                              Select Sponsered By
-                            </CFormLabel>
-                            <CFormSelect
-                              aria-label="Default select example"
-                              name="sponserId"
-                              onChange={handleChange}
-                              disabled
-                            >
-                              <option value={values.sponserId}>
-                                {user.firstName + ' ' + user.lastName}
-                              </option>
-                            </CFormSelect>
-                          </div>
                         </CCol>
-                        <CCol md={6}>
-                          <div className="mb-3">
-                            <CFormLabel htmlFor="placementControlInput">Placement</CFormLabel>
-                            <CFormCheck
-                              type="radio"
-                              name="placement"
-                              id="flexRadioDisabled1"
-                              label="Left"
-                              value="Left"
-                              onChange={handleChange}
-                              defaultChecked={values.placement === 'Left'}
-                            />
-                            <CFormCheck
-                              type="radio"
-                              name="placement"
-                              id="flexRadioCheckedDisabled1"
-                              label="Right"
-                              value="Right"
-                              onChange={handleChange}
-                              defaultChecked={values.placement === 'Right'}
-                            />
-                          </div>
-                        </CCol>
+                        {isSponser && (
+                          <>
+                            <CCol md={6}>
+                              <div className="mb-3">
+                                <CFormLabel htmlFor="exampleFormControlInput1">
+                                  Select Sponsered By
+                                </CFormLabel>
+                                <CFormSelect
+                                  aria-label="Default select example"
+                                  name="sponserId"
+                                  onChange={handleChange}
+                                >
+                                  <option value={true}>Sunil Kumar</option>
+                                  <option value={false}>Manjeet Singh</option>
+                                </CFormSelect>
+                              </div>
+                            </CCol>
+                            <CCol md={6}>
+                              <div className="mb-3">
+                                <CFormLabel htmlFor="placementControlInput">Placement</CFormLabel>
+                                <CFormCheck
+                                  type="radio"
+                                  name="placement"
+                                  id="flexRadioDisabled1"
+                                  label="Left"
+                                  value="Left"
+                                  onChange={handleChange}
+                                  defaultChecked={values.sponser === 'Left'}
+                                />
+                                <CFormCheck
+                                  type="radio"
+                                  name="placement"
+                                  id="flexRadioCheckedDisabled1"
+                                  label="Right"
+                                  value="Right"
+                                  onChange={handleChange}
+                                  defaultChecked={values.sponser === 'Right'}
+                                />
+                              </div>
+                            </CCol>
+                          </>
+                        )}
                       </CRow>
                       <CRow>
                         <CHeader style={vars} className="mb-3">
@@ -447,15 +451,14 @@ const AddUser = () => {
                             <CFormSelect
                               id="planFormControlInput"
                               aria-label="Default select example"
-                              name="packageId"
-                              onChange={handleChange}
-                              disabled
+                              name="plan"
+                              onChange={(e) => setFieldValue('plan', e.target.value)}
                             >
-                              <option value={values.packageId}>
-                                {!isLoading && packages?.data[0].name}
-                              </option>
+                              <option>Select any package</option>
+                              <option value={123355}>Sonax Downpayemnt Joining Package</option>
+                              <option value={234}>234 Sonax Downpayemnt Joining Package</option>
                             </CFormSelect>
-                            {errors && <p className="text-danger">{errors.packageId}</p>}
+                            {errors && <p className="text-danger">{errors.plan}</p>}
                           </div>
                         </CCol>
                       </CRow>

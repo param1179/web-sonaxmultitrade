@@ -1,8 +1,10 @@
 import React from 'react'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-const Users = React.lazy(() => import('./views/users'))
+const DashboardAdmin = React.lazy(() => import('./views/dashboard/DashboardAdmin'))
+const GetUsers = React.lazy(() => import('./views/users/GetUsers'))
 const AddUser = React.lazy(() => import('./views/users/AddUser'))
+const AdminAddUser = React.lazy(() => import('./views/adminUsers/AddUser'))
 const Activities = React.lazy(() => import('./views/users/activities'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -57,10 +59,12 @@ const Schools = React.lazy(() => import('./views/schools/Schools'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/dashboardAdmin', name: 'Dashboard Admin', element: DashboardAdmin },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
 
-  { path: '/users', name: 'Users', element: AddUser },
+  { path: '/users', name: 'Users', element: GetUsers },
   { path: '/add', name: 'Add User', element: AddUser },
+  { path: '/adminAdd', name: 'Admin Add User', element: AdminAddUser },
   { path: '/activities', name: 'Users Activities', element: AddUser },
   { path: '/coupons', name: 'Coupons', element: AddUser },
   // { path: '/schools', name: 'Schools', element: Schools },

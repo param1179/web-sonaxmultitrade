@@ -12,9 +12,11 @@ import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
 import navigation from '../_nav'
+import navigationAdmin from '../_navAdmin'
 import { commonSelector } from 'src/redux'
 import { changeState } from 'src/redux/slices/common'
 import brand from 'src/assets/sonaxmultitrade.png'
+import { getProfileData } from 'src/helpers/tokenLS'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -24,6 +26,8 @@ const AppSidebar = () => {
     '--cui-sidebar-nav-link-active-bg': '#f11a2e',
     '--cui-sidebar-bg': '#333232',
   }
+
+  const profile = getProfileData()
 
   return (
     <CSidebar
@@ -42,7 +46,9 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          <AppSidebarNav
+            items={profile && profile.role === 'superAdmin' ? navigationAdmin : navigation}
+          />
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler

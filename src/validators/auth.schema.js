@@ -46,7 +46,6 @@ export const createUser = yup.object().shape({
   lastName: yup.string().required('Last name is require field!'),
   gender: yup.string().required('Last name is require field!'),
   dob: yup.date().required('Date of birth required'),
-  plan: yup.string().required('Package required'),
   mobile: yup
     .string()
     .matches(HELP.phoneRegExp, 'Phone number is not valid')
@@ -85,4 +84,9 @@ export const createSchool = yup.object().shape({
     .matches(HELP.EMAIL_REGEXP, 'Email is not correct!')
     .required('Email is require field!'),
   schoolName: yup.string().required('Name is require field!'),
+})
+
+export const userSignIn = yup.object().shape({
+  uId: yup.string().required('UID is require field!'),
+  password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),
 })
