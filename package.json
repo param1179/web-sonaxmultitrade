@@ -35,11 +35,13 @@
     "react-app-polyfill": "^3.0.0",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0",
+    "react-organizational-chart": "^2.2.0",
     "react-query": "^3.39.2",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.3.0",
     "redux": "4.2.0",
     "simplebar-react": "^2.4.1",
+    "styled-components": "^5.3.6",
     "yup": "^0.32.11"
   },
   "devDependencies": {
