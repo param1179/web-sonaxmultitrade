@@ -23,7 +23,7 @@ const Dashboard = () => {
       <CRow>
         <CCol xs={12}>
           <CRow>
-            <CCol xs={4}>
+            <CCol md={4}>
               <CCard>
                 <CCardHeader>
                   <strong>User&apos;s Details</strong>
@@ -49,7 +49,7 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol xs={4}>
+            <CCol md={4}>
               <CCard>
                 <CCardHeader>
                   <strong>User&apos;s Address</strong>
@@ -83,7 +83,7 @@ const Dashboard = () => {
                 </CCardBody>
               </CCard>
             </CCol>
-            <CCol xs={4}>
+            <CCol md={4}>
               <CCard>
                 <CCardHeader>
                   <strong>User&apos;s Nominee</strong>
@@ -104,6 +104,44 @@ const Dashboard = () => {
                   <CRow>
                     <CCol>Relation:</CCol>
                     <CCol>{resp?.data?.nominee.relation}</CCol>
+                  </CRow>
+                  <hr />
+                </CCardBody>
+              </CCard>
+            </CCol>
+            <CCol md={4}>
+              <CCard>
+                <CCardHeader>
+                  <strong>Sponser By</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CRow>
+                    <CCol>Full Name:</CCol>
+                    <CCol>
+                      {resp?.data.sponserBY.sponserId.firstName +
+                        ' ' +
+                        resp?.data.sponserBY.sponserId.lastName}
+                    </CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>UID:</CCol>
+                    <CCol>{resp?.data.sponserBY.sponserId.uId}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Email:</CCol>
+                    <CCol>{resp?.data.sponserBY.sponserId.email}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Mobile Number:</CCol>
+                    <CCol>{resp?.data.sponserBY.sponserId.mobile}</CCol>
+                  </CRow>
+                  <hr />
+                  <CRow>
+                    <CCol>Position in Team:</CCol>
+                    <CCol>{resp?.data.sponserBY.placement}</CCol>
                   </CRow>
                   <hr />
                 </CCardBody>
