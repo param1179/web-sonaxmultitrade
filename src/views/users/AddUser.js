@@ -14,6 +14,7 @@ import {
 } from '@coreui/react'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { adminApi } from 'src/APIs'
 import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
@@ -22,6 +23,7 @@ const vars = {
 }
 
 const AddUser = () => {
+  const { state } = useLocation()
   const [isSponser, setIsSponsered] = useState(false)
   const user = getProfileData()
   const { isLoading, data: packages } = adminApi.useGetPackages()
@@ -29,9 +31,10 @@ const AddUser = () => {
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
       initialValues: {
+        parentId: state?.pId ? state.pId : user && user._id,
         sponserId: user && user._id,
         packageId: packages?.data[0]._id,
-        placement: 'Left',
+        placement: state?.placement ? state.placement : 'Left',
         firstName: '',
         lastName: '',
         dob: '',
@@ -133,6 +136,7 @@ const AddUser = () => {
                               label="Left"
                               value="Left"
                               onChange={handleChange}
+                              disabled
                               defaultChecked={values.placement === 'Left'}
                             />
                             <CFormCheck
@@ -142,6 +146,7 @@ const AddUser = () => {
                               label="Right"
                               value="Right"
                               onChange={handleChange}
+                              disabled
                               defaultChecked={values.placement === 'Right'}
                             />
                           </div>
@@ -380,7 +385,7 @@ const AddUser = () => {
                             <CFormInput
                               type="text"
                               id="nomineeFirstNameControlInput"
-                              placeholder="nomineeFirstName"
+                              placeholder="First Name"
                               value={values.nomineeFirstName}
                               name="nomineeFirstName"
                               onChange={handleChange}
@@ -397,7 +402,7 @@ const AddUser = () => {
                             <CFormInput
                               type="text"
                               id="nomineeLastNameControlInput"
-                              placeholder="nomineeLastName"
+                              placeholder="Last Name"
                               value={values.nomineeLastName}
                               name="nomineeLastName"
                               onChange={handleChange}
@@ -412,7 +417,7 @@ const AddUser = () => {
                             <CFormInput
                               type="date"
                               id="nomineeDobControlInput"
-                              placeholder="nomineeDob"
+                              placeholder="Dob"
                               value={values.nomineeDob}
                               name="nomineeDob"
                               onChange={handleChange}
@@ -427,7 +432,7 @@ const AddUser = () => {
                             <CFormInput
                               type="text"
                               id="nomineeRelationControlInput"
-                              placeholder="nomineeRelation"
+                              placeholder="Relation"
                               value={values.nomineeRelation}
                               name="nomineeRelation"
                               onChange={handleChange}

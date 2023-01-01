@@ -46,6 +46,10 @@ export const createUser = yup.object().shape({
   lastName: yup.string().required('Last name is require field!'),
   gender: yup.string().required('Last name is require field!'),
   dob: yup.date().required('Date of birth required'),
+  nomineeFirstName: yup.string().required('First name is require field!'),
+  nomineeLastName: yup.string().required('First name is require field!'),
+  nomineeDob: yup.date().required('Date of birth required'),
+  nomineeRelation: yup.string().required('Relation is require field!'),
   mobile: yup
     .string()
     .matches(HELP.phoneRegExp, 'Phone number is not valid')
@@ -56,11 +60,7 @@ export const createUser = yup.object().shape({
     .string()
     .matches(HELP.EMAIL_REGEXP, 'Email is not correct!')
     .required('Email is require field!'),
-  password: yup
-    .string()
-    .matches(HELP.PASSWORD_REGEXP, 'Password is not correct!')
-    .max(15, 'Max 15 symbol!')
-    .required('Password is require field!'),
+  password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),
   cpassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match!')

@@ -1,22 +1,13 @@
 import React from 'react'
 
-import {
-  CAvatar,
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CImage,
-  CRow,
-  CWidgetStatsC,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilDollar, cilPeople } from '@coreui/icons'
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 
 import { adminApi } from 'src/APIs'
 
 const Dashboard = () => {
   const { isLoading, data: resp } = adminApi.useProfile()
+
+  const pos = resp?.data?.sponserBY?.childs?.filter((res) => res.childId._id === resp?.data?._id)
 
   return (
     <>
@@ -120,30 +111,30 @@ const Dashboard = () => {
                       <CRow>
                         <CCol>Full Name:</CCol>
                         <CCol>
-                          {resp?.data.sponserBY?.sponserId.firstName +
+                          {resp?.data.sponserBY?.parentId.firstName +
                             ' ' +
-                            resp?.data.sponserBY?.sponserId.lastName}
+                            resp?.data.sponserBY?.parentId.lastName}
                         </CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>UID:</CCol>
-                        <CCol>{resp?.data.sponserBY?.sponserId.uId}</CCol>
+                        <CCol>{resp?.data.sponserBY?.parentId.uId}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>Email:</CCol>
-                        <CCol>{resp?.data.sponserBY?.sponserId.email}</CCol>
+                        <CCol>{resp?.data.sponserBY?.parentId.email}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>Mobile Number:</CCol>
-                        <CCol>{resp?.data.sponserBY?.sponserId.mobile}</CCol>
+                        <CCol>{resp?.data.sponserBY?.parentId.mobile}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>Position in Team:</CCol>
-                        <CCol>{resp?.data.sponserBY?.placement}</CCol>
+                        <CCol>{pos[0].placement}</CCol>
                       </CRow>
                     </>
                   )}
