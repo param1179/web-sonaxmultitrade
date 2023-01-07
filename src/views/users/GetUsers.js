@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { useQueryClient } from 'react-query'
+import React from 'react'
 import { adminApi } from 'src/APIs'
-import { Tree, TreeNode } from 'react-organizational-chart'
+import { Tree } from 'react-organizational-chart'
 import styled from 'styled-components'
 import { getProfileData } from 'src/helpers/tokenLS'
-import { useNavigate } from 'react-router-dom'
+import CIcon from '@coreui/icons-react'
+import { cilUser } from '@coreui/icons'
+import FamilyTree from 'src/components/FamilyTree'
 
 function GetUsers() {
-  const navigation = useNavigate()
   const user = getProfileData()
-  const { isLoading, data } = adminApi.useGetTeams()
+  const { isLoading, data } = adminApi.useGetTeams(user._id)
+  var childs = data?.data?.childs
+  if (data?.data?.childs[0].placement === 'Right') {
+    childs = data?.data?.childs.reverse()
+  }
+
   const StyledNode = styled.div`
     padding: 5px;
     border-radius: 8px;
@@ -17,49 +22,30 @@ function GetUsers() {
     border: 1px solid red;
   `
 
-  const StyledTreeExample = () => (
-    <Tree
-      lineWidth={'2px'}
-      lineColor={'green'}
-      lineBorderRadius={'10px'}
-      label={<StyledNode>{user.firstName + ' ' + user.lastName}</StyledNode>}
-    >
-      {data?.data?.map((res, i) => {
-        var childs = res.childs
-        if (res.childs[0].placement === 'Right') {
-          childs = res.childs.reverse()
-        }
-        return childs.map((child, n) => {
-          return (
-            <TreeNode
-              key={n}
-              label={
-                <StyledNode>
-                  <div
-                    onClick={() =>
-                      navigation('/add', {
-                        state: {
-                          pId: child.childId?._id ? child.childId?._id : user._id,
-                          placement: n === 0 ? 'Left' : 'Right',
-                        },
-                      })
-                    }
-                  >
-                    {child.childId.uId + ` (${child.childId.firstName})`}
-                  </div>
-                </StyledNode>
-              }
-            />
-          )
-        })
-      })}
-    </Tree>
-  )
-
   return (
     <div>
       <strong>All Teams</strong>
-      <StyledTreeExample />
+
+      <Tree
+        lineWidth={'2px'}
+        lineColor={'green'}
+        lineBorderRadius={'10px'}
+        label={
+          <StyledNode>
+            <div>
+              <CIcon className="sidebar-brand-narrow" icon={cilUser} height={50} />
+              <div>
+                {user.uId ? user.uId : ''}
+                {` (${user.firstName})`}
+              </div>
+            </div>
+          </StyledNode>
+        }
+      >
+        {childs?.map((child, n) => {
+          return <FamilyTree key={n} item={child} num={n} StyledNode={StyledNode} />
+        })}
+      </Tree>
     </div>
   )
 }

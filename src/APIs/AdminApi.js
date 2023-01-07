@@ -7,7 +7,7 @@ import { logout } from '../redux/slices/common'
 import { TokenLS } from '../helpers'
 
 const fetchProfile = async () => await axios.get('users/profile')
-const fetchTeams = async () => await axios.get('users/teams')
+const fetchTeams = async (pId) => await axios.get(`users/teams/${pId}`)
 
 const fetchAdmins = async () => await axios.get('admin/gets')
 
@@ -154,8 +154,8 @@ export const useGetPackages = (limit, page, search) => {
   })
 }
 
-export const useGetTeams = (limit, page, search) => {
-  return useQuery(`users/teams`, () => fetchTeams(), {
+export const useGetTeams = (id) => {
+  return useQuery(`users/teams/${id}`, () => fetchTeams(id), {
     refetchOnWindowFocus: false,
   })
 }

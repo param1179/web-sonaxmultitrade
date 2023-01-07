@@ -24,6 +24,7 @@ const vars = {
 
 const AddUser = () => {
   const { state } = useLocation()
+  console.log(state)
   const [isSponser, setIsSponsered] = useState(false)
   const user = getProfileData()
   const { isLoading, data: packages } = adminApi.useGetPackages()
