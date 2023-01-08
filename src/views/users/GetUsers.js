@@ -34,17 +34,24 @@ function GetUsers() {
           <StyledNode>
             <div>
               <CIcon className="sidebar-brand-narrow" icon={cilUser} height={50} />
-              <div>
-                {user.uId ? user.uId : ''}
-                {` (${user.firstName})`}
-              </div>
+              <div>{user.uId ? user.uId : ''}</div>
+              <div>{user.firstName}</div>
             </div>
           </StyledNode>
         }
       >
-        {childs?.map((child, n) => {
-          return <FamilyTree key={n} item={child} num={n} StyledNode={StyledNode} />
-        })}
+        {childs &&
+          childs?.map((child, n) => {
+            return (
+              <FamilyTree
+                key={n}
+                item={child}
+                num={n}
+                StyledNode={StyledNode}
+                pId={data?.data.parentId}
+              />
+            )
+          })}
       </Tree>
     </div>
   )

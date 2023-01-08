@@ -14,7 +14,7 @@ import {
 } from '@coreui/react'
 import { useFormik } from 'formik'
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { adminApi } from 'src/APIs'
 import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
@@ -23,8 +23,8 @@ const vars = {
 }
 
 const AddUser = () => {
+  const navigation = useNavigate()
   const { state } = useLocation()
-  console.log(state)
   const [isSponser, setIsSponsered] = useState(false)
   const user = getProfileData()
   const { isLoading, data: packages } = adminApi.useGetPackages()
@@ -67,6 +67,7 @@ const AddUser = () => {
     const resp = await mutateCreate.mutateAsync(body)
     if (resp?.status === 200) {
       resetForm()
+      navigation('/users')
     }
   }
 
