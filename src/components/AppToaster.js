@@ -17,7 +17,7 @@ const AppToaster = ({ color, content }) => {
         >
           <rect width="100%" height="100%" fill="#007aff"></rect>
         </svg>
-        <strong className="me-auto">Medsembly</strong>
+        <strong className="me-auto">Sonax Multitrade</strong>
         <small>0 min ago</small>
       </CToastHeader>
       <CToastBody>{content}</CToastBody>

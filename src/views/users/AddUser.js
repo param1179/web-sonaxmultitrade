@@ -11,19 +11,24 @@ import {
   CFormSelect,
   CHeader,
   CRow,
+  CToaster,
 } from '@coreui/react'
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { adminApi } from 'src/APIs'
 import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
+import AppToaster from 'src/components/AppToaster'
+
 const vars = {
   '--cui-header-bg': '#E4e4e4',
 }
 
 const AddUser = () => {
   const navigation = useNavigate()
+  const toaster = useRef()
+  const [toast, addToast] = useState(0)
   const { state } = useLocation()
   const [isSponser, setIsSponsered] = useState(false)
   const user = getProfileData()
@@ -67,12 +72,14 @@ const AddUser = () => {
     const resp = await mutateCreate.mutateAsync(body)
     if (resp?.status === 200) {
       resetForm()
+      addToast(AppToaster({ color: '', content: 'User added!' }))
       navigation('/users')
     }
   }
 
   return (
     <CRow>
+      <CToaster ref={toaster} push={toast} placement="top-end" />
       <CCol xs={12}>
         <CRow>
           <CCol>
