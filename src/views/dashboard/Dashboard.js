@@ -2,10 +2,10 @@ import React from 'react'
 
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 
-import { adminApi } from 'src/APIs'
+import { usersApi } from 'src/APIs'
 
 const Dashboard = () => {
-  const { isLoading, data: resp } = adminApi.useProfile()
+  const { isLoading, data: resp } = usersApi.useProfile()
 
   const pos = resp?.data?.sponserBY?.childs?.filter((res) => res.childId._id === resp?.data?._id)
 
@@ -89,12 +89,12 @@ const Dashboard = () => {
                   <hr />
                   <CRow>
                     <CCol>Date of birth:</CCol>
-                    <CCol>{resp?.data?.nominee.dob}</CCol>
+                    <CCol>{resp?.data?.nominee?.dob}</CCol>
                   </CRow>
                   <hr />
                   <CRow>
                     <CCol>Relation:</CCol>
-                    <CCol>{resp?.data?.nominee.relation}</CCol>
+                    <CCol>{resp?.data?.nominee?.relation}</CCol>
                   </CRow>
                   <hr />
                 </CCardBody>

@@ -1,5 +1,14 @@
 import React, { useEffect } from 'react'
-import { CButton, CCol, CForm, CFormInput, CInputGroup, CInputGroupText, CRow } from '@coreui/react'
+import {
+  CButton,
+  CCol,
+  CForm,
+  CFormInput,
+  CImage,
+  CInputGroup,
+  CInputGroupText,
+  CRow,
+} from '@coreui/react'
 import { useNavigate } from 'react-router-dom'
 import { getToken } from 'src/helpers/tokenLS'
 import { useFormik } from 'formik'
@@ -7,6 +16,7 @@ import { authSchema } from 'src/validators'
 import { authApi } from 'src/APIs'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import brand from 'src/assets/sonaxmultitrade.png'
 
 export default function LandingPage() {
   const navigate = useNavigate()
@@ -31,6 +41,12 @@ export default function LandingPage() {
 
   return (
     <section className="background-radial-gradient overflow-hidden">
+      <nav className="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+        <a href="/" className="navbar-brand p-0">
+          <CImage src={brand} height={50} alt="Logo" />
+          <strong className="m-0 text-light">Sonax Multitrade</strong>
+        </a>
+      </nav>
       <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
         <div className="row gx-lg-5 align-items-center mb-5">
           <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
@@ -55,8 +71,9 @@ export default function LandingPage() {
             <div className="card bg-glass">
               <div className="card-body px-4 py-5 px-md-5">
                 <CForm>
-                  <h1>User Login</h1>
-                  <p className="text-medium-emphasis">Sign In to your account</p>
+                  <h3 className="text-light">User Login</h3>
+                  <p className="text-light">Sign In to your account</p>
+                  {errors && <span className="text-danger">{errors.uId}</span>}
                   <CInputGroup className="mb-3">
                     <CInputGroupText>
                       <CIcon icon={cilUser} />
@@ -70,7 +87,6 @@ export default function LandingPage() {
                       error={errors.uId}
                     />
                   </CInputGroup>
-                  {errors && <p className="text-danger">{errors.uId}</p>}
                   <CInputGroup className="mb-4">
                     <CInputGroupText>
                       <CIcon icon={cilLockLocked} />
@@ -97,11 +113,11 @@ export default function LandingPage() {
                         Login
                       </CButton>
                     </CCol>
-                    <CCol xs={6} className="text-right">
+                    {/* <CCol xs={6} className="text-right">
                       <CButton color="link" className="px-0">
                         Forgot password?
                       </CButton>
-                    </CCol>
+                    </CCol> */}
                   </CRow>
                 </CForm>
               </div>

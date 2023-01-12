@@ -16,7 +16,7 @@ import {
 import { useFormik } from 'formik'
 import React, { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { adminApi } from 'src/APIs'
+import { usersApi } from 'src/APIs'
 import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
 import AppToaster from 'src/components/AppToaster'
@@ -32,7 +32,7 @@ const AddUser = () => {
   const { state } = useLocation()
   const [isSponser, setIsSponsered] = useState(false)
   const user = getProfileData()
-  const { isLoading, data: packages } = adminApi.useGetPackages()
+  const { isLoading, data: packages } = usersApi.useGetPackages()
 
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
@@ -66,7 +66,7 @@ const AddUser = () => {
       onSubmit: (values) => onCreate(values),
     })
 
-  const mutateCreate = adminApi.useCreateAdminUser()
+  const mutateCreate = usersApi.useCreateUser()
 
   const onCreate = async (body) => {
     const resp = await mutateCreate.mutateAsync(body)

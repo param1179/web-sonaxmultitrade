@@ -20,7 +20,7 @@ const fetchDeleteAdmin = async (id) => await axios.delete(`admin/delete/${id}`)
 const fetchDeleteCoupon = async (id) => await axios.delete(`admin/coupon/${id}`)
 
 const fetchCreateAdmin = async (body) => await axios.post('admin/create', body)
-const fetchCreateAdminUser = async (body) => await axios.post('admin/users/add', body)
+const fetchCreateUser = async (body) => await axios.post('users/add', body)
 const fetchCreateSchool = async (body) => await axios.post('admin/schools', body)
 const fetchCreateCoupon = async (body) => await axios.post('admin/coupon', body)
 
@@ -35,7 +35,7 @@ const fetchUsers = async (limit, page, search) =>
   await axios.get(`admin/users?page=${page}&limit=${limit}&search=${search}`)
 
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
-const fetchPackages = async () => await axios.get(`admin/packages`)
+const fetchPackages = async () => await axios.get(`users/packages`)
 
 const fetchDeleteUser = async (id) => await axios.delete(`admin/deleteUser/${id}`)
 
@@ -91,8 +91,8 @@ export const useCreateAdmin = (setErrors) => {
   })
 }
 
-export const useCreateAdminUser = (setErrors) => {
-  return useMutation(fetchCreateAdminUser, {
+export const useCreateUser = (setErrors) => {
+  return useMutation(fetchCreateUser, {
     onError: (error) => {
       if (error?.status === 400) {
         setErrors({ email: error.message })
@@ -149,7 +149,7 @@ export const useGetUsers = (limit, page, search) => {
 }
 
 export const useGetPackages = (limit, page, search) => {
-  return useQuery(`admin/packages`, () => fetchPackages(), {
+  return useQuery(`users/packages`, () => fetchPackages(), {
     refetchOnWindowFocus: false,
   })
 }

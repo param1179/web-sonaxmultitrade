@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import { Tree, TreeNode } from 'react-organizational-chart'
+import { TreeNode } from 'react-organizational-chart'
 import PropTypes from 'prop-types'
-import { adminApi } from 'src/APIs'
-import { cilUser } from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
+import { usersApi } from 'src/APIs'
 import { useNavigate } from 'react-router-dom'
 import brand from 'src/assets/sonaxmultitrade.png'
 import { CImage } from '@coreui/react'
@@ -43,7 +41,7 @@ function FamilyTree({ item, num, StyledNode, pId }) {
     )
   }
 
-  const { isloading, data: resp } = adminApi.useGetTeams(childId._id)
+  const { isloading, data: resp } = usersApi.useGetTeams(childId._id)
   var pD = resp?.status === 200 && resp?.data?.parentId
   var childs = resp?.status === 200 ? resp?.data?.childs : []
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { adminApi } from 'src/APIs'
+import { usersApi } from 'src/APIs'
 import { Tree } from 'react-organizational-chart'
 import styled from 'styled-components'
 import { getProfileData } from 'src/helpers/tokenLS'
@@ -13,7 +13,7 @@ const StyledNode = styled.div`
 `
 function GetUsers() {
   const user = getProfileData()
-  const { isLoading, data } = adminApi.useGetTeams(user._id)
+  const { isLoading, data } = usersApi.useGetTeams(user._id)
   var childs = data?.data?.childs
   if (data?.data?.childs[0].placement === 'Right') {
     childs = data?.data?.childs.reverse()
