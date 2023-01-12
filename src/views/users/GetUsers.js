@@ -7,6 +7,10 @@ import brand from 'src/assets/sonaxmultitrade.png'
 import FamilyTree from 'src/components/FamilyTree'
 import { CCard, CCardBody, CCardHeader, CCol, CImage, CRow } from '@coreui/react'
 
+const StyledNode = styled.div`
+  padding: 5px;
+  display: inline-block;
+`
 function GetUsers() {
   const user = getProfileData()
   const { isLoading, data } = adminApi.useGetTeams(user._id)
@@ -14,11 +18,6 @@ function GetUsers() {
   if (data?.data?.childs[0].placement === 'Right') {
     childs = data?.data?.childs.reverse()
   }
-
-  const StyledNode = styled.div`
-    padding: 5px;
-    display: inline-block;
-  `
 
   return (
     <CRow>

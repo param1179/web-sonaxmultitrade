@@ -9,31 +9,9 @@ import { useNavigate } from 'react-router-dom'
 import brand from 'src/assets/sonaxmultitrade.png'
 import { CImage } from '@coreui/react'
 
-export default function FamilyTree({ item, num, StyledNode, pId }) {
+function FamilyTree({ item, num, StyledNode, pId }) {
   const navigation = useNavigate()
-
   const { childId, parentId } = item
-  const resp = childId._id && adminApi.useGetTeams(childId._id).data
-  var pD = resp ? resp?.data?.parentId : ''
-  var childs = resp ? resp?.data?.childs : []
-
-  const hasChildren = childs && childs.length !== 0
-
-  if (hasChildren && resp?.data?.childs[0].placement === 'Right') {
-    childs = resp?.data?.childs.reverse()
-  }
-  const newChild = () => {
-    if (hasChildren) {
-      return (
-        childs &&
-        childs.map((child, n) => {
-          return <FamilyTree key={n} item={child} num={n} StyledNode={StyledNode} pId={pD} />
-        })
-      )
-    }
-    return null
-  }
-
   const renderBranch = () => {
     return (
       <StyledNode>
@@ -64,6 +42,30 @@ export default function FamilyTree({ item, num, StyledNode, pId }) {
       </StyledNode>
     )
   }
+
+  const { isloading, data: resp } = adminApi.useGetTeams(childId._id)
+  var pD = resp?.status === 200 && resp?.data?.parentId
+  var childs = resp?.status === 200 ? resp?.data?.childs : []
+
+  const hasChildren = childs && childs.length !== 0
+
+  if (hasChildren && resp?.data?.childs[0].placement === 'Right') {
+    childs = resp?.data?.childs.reverse()
+  }
+
+  const newChild = () => {
+    if (hasChildren) {
+      return childs.map((child, n) => {
+        return isloading ? (
+          <>OK</>
+        ) : (
+          <FamilyTree key={n} item={child} num={n} StyledNode={StyledNode} pId={pD} />
+        )
+      })
+    }
+    return null
+  }
+
   const StyledTreeExample = () => (
     <TreeNode key={num} label={renderBranch()}>
       {newChild()}
@@ -72,6 +74,8 @@ export default function FamilyTree({ item, num, StyledNode, pId }) {
 
   return StyledTreeExample()
 }
+
+export default FamilyTree
 
 FamilyTree.propTypes = {
   item: PropTypes.object,

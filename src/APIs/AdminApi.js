@@ -155,7 +155,7 @@ export const useGetPackages = (limit, page, search) => {
 }
 
 export const useGetTeams = (id) => {
-  return useQuery(`users/teams/${id}`, () => fetchTeams(id), {
+  return useQuery(`users/teams/${id}`, () => id && fetchTeams(id), {
     refetchOnWindowFocus: false,
   })
 }
