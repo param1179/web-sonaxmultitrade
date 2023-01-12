@@ -12,7 +12,7 @@ const axios = Axios.create({
 
 const exit = () => {
   TokenLS.removeToken()
-  window.location.pathname = '/signIn'
+  window.location.pathname = '/'
 }
 
 let isRefreshing = false
