@@ -6,6 +6,8 @@ import { adminApi } from 'src/APIs'
 import { cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
+import brand from 'src/assets/sonaxmultitrade.png'
+import { CImage } from '@coreui/react'
 
 export default function FamilyTree({ item, num, StyledNode, pId }) {
   const navigation = useNavigate()
@@ -36,8 +38,9 @@ export default function FamilyTree({ item, num, StyledNode, pId }) {
     return (
       <StyledNode>
         <div
-          role="button"
+          role={!childId.uId ? 'button' : ''}
           onClick={() =>
+            !childId.uId &&
             navigation('/add', {
               state: {
                 pId: typeof pId === 'string' ? pId : parentId,
@@ -46,9 +49,17 @@ export default function FamilyTree({ item, num, StyledNode, pId }) {
             })
           }
         >
-          <CIcon className="sidebar-brand-narrow" icon={cilUser} height={50} />
-          <div>{childId.uId ? childId.uId : ''}</div>
-          <div>{childId.firstName}</div>
+          <CImage src={brand} height={50} alt="Logo" />
+          <div
+            className={
+              !childId.uId
+                ? 'border border-success tree-content app-bg-2'
+                : 'border border-success tree-content app-bg'
+            }
+          >
+            <div>{childId.uId ? childId.uId : ''}</div>
+            <div>{childId.firstName}</div>
+          </div>
         </div>
       </StyledNode>
     )
