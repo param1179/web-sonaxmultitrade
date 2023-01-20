@@ -20,6 +20,12 @@ const _nav = [
   },
   {
     component: CNavItem,
+    name: 'Register',
+    to: '/register/user',
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
     name: 'All Users',
     to: '/users',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,

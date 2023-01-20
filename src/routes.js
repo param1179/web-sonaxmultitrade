@@ -6,6 +6,7 @@ const GetUsers = React.lazy(() => import('./views/users/GetUsers'))
 const GetAdminUsers = React.lazy(() => import('./views/adminUsers/GetUsers'))
 const AddUser = React.lazy(() => import('./views/users/AddUser'))
 const AdminAddUser = React.lazy(() => import('./views/adminUsers/AddUser'))
+const Register = React.lazy(() => import('./views/users/Register'))
 const Activities = React.lazy(() => import('./views/users/activities'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
@@ -66,6 +67,7 @@ const routes = [
   { path: '/users', name: 'Users', element: GetUsers },
   { path: '/adminUsers', name: 'Users', element: GetAdminUsers },
   { path: '/add', name: 'Add User', element: AddUser },
+  { path: '/register/user', name: 'Register', element: Register },
   { path: '/adminAdd', name: 'Admin Add User', element: AdminAddUser },
   { path: '/activities', name: 'Users Activities', element: AddUser },
   { path: '/coupons', name: 'Coupons', element: AddUser },
