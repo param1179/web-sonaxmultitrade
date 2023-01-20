@@ -15,7 +15,7 @@ import {
 } from '@coreui/react'
 import { useFormik } from 'formik'
 import React, { useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { usersApi } from 'src/APIs'
 import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
@@ -32,37 +32,36 @@ const Register = () => {
   const user = getProfileData()
   const { isLoading, data: packages } = usersApi.useGetPackages()
 
-  const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
-    useFormik({
-      initialValues: {
-        parentId: '',
-        sponserId: user && user._id,
-        packageId: packages?.data[0]._id,
-        placement: 'Left',
-        firstName: '',
-        lastName: '',
-        dob: '',
-        mobile: '',
-        email: '',
-        gender: 'Male',
-        activeUser: 'Active',
-        password: '',
-        cpassword: '',
-        spouseOrFather: '',
-        nomineeFirstName: '',
-        nomineeLastName: '',
-        nomineeDob: '',
-        nomineeRelation: '',
-        locality: '',
-        city: '',
-        district: '',
-        state: '',
-        pin: '',
-        country: '',
-      },
-      validationSchema: authSchema.createUser,
-      onSubmit: (values) => onCreate(values),
-    })
+  const { values, handleChange, submitForm, errors, isValid, dirty, resetForm } = useFormik({
+    initialValues: {
+      parentId: '',
+      sponserId: user && user._id,
+      packageId: packages?.data[0]._id,
+      placement: 'Left',
+      firstName: '',
+      lastName: '',
+      dob: '',
+      mobile: '',
+      email: '',
+      gender: 'Male',
+      activeUser: 'Active',
+      password: '',
+      cpassword: '',
+      spouseOrFather: '',
+      nomineeFirstName: '',
+      nomineeLastName: '',
+      nomineeDob: '',
+      nomineeRelation: '',
+      locality: '',
+      city: '',
+      district: '',
+      state: '',
+      pin: '',
+      country: '',
+    },
+    validationSchema: authSchema.createUser,
+    onSubmit: (values) => onCreate(values),
+  })
 
   const mutateCreate = usersApi.useRegisterUser()
 
@@ -93,29 +92,6 @@ const Register = () => {
                         <CHeader style={vars} className="mb-3">
                           <strong>Sponser&apos;s Details</strong>
                         </CHeader>
-                        {/* <CCol md={6}>
-                            <div className="mb-3">
-                              <CFormLabel htmlFor="exampleFormControlInput1">Sponsered</CFormLabel>
-                              <CFormCheck
-                                type="radio"
-                                name="sponser"
-                                id="flexRadioDisabled1"
-                                label="Yes"
-                                value="Yes"
-                                onChange={isSponsered}
-                                defaultChecked={values.sponser === 'Yes'}
-                              />
-                              <CFormCheck
-                                type="radio"
-                                name="sponser"
-                                id="flexRadioCheckedDisabled1"
-                                label="No"
-                                value="No"
-                                onChange={isSponsered}
-                                defaultChecked={values.sponser === 'No'}
-                              />
-                            </div>
-                          </CCol> */}
                         <CCol md={6}>
                           <div className="mb-3">
                             <CFormLabel htmlFor="exampleFormControlInput1">
