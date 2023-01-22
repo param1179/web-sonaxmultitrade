@@ -26,8 +26,10 @@ import logoNegativ from 'src/assets/brand/sonaxmultitrade.svg'
 import { useSelector } from 'react-redux'
 import { commonSelector } from 'src/redux'
 import { adminApi } from 'src/APIs'
+import { useNavigate } from 'react-router-dom'
 
 const AppHeaderDropdown = () => {
+  const navigate = useNavigate()
   const { profile } = useSelector(commonSelector)
   const { mutate } = adminApi.useLogOut()
 
@@ -74,6 +76,10 @@ const AppHeaderDropdown = () => {
         <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
           Settings
+        </CDropdownItem>
+        <CDropdownItem role="button" onClick={() => navigate('/password')}>
+          <CIcon icon={cilSettings} className="me-2" />
+          Change Password
         </CDropdownItem>
         {/* <CDropdownItem href="#">
           <CIcon icon={cilCreditCard} className="me-2" />

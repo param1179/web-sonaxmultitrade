@@ -41,6 +41,19 @@ export const createAdmin = yup.object().shape({
     .required('Passwords must match!'),
 })
 
+export const changePassword = yup.object().shape({
+  oldPassword: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),
+  password: yup
+    .string()
+    .max(15, 'Max 15 symbol!')
+    .notOneOf([yup.ref('oldPassword'), null], 'Password should not same as old password!')
+    .required('Password is require field!'),
+  cPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match!')
+    .required('Passwords must match!'),
+})
+
 export const createUser = yup.object().shape({
   firstName: yup.string().required('First name is require field!'),
   lastName: yup.string().required('Last name is require field!'),
