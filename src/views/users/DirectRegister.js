@@ -25,7 +25,7 @@ const vars = {
   '--cui-header-bg': '#E4e4e4',
 }
 
-const Register = () => {
+const DirectRegister = () => {
   const navigation = useNavigate()
   const toaster = useRef()
   const [toast, addToast] = useState(0)
@@ -508,4 +508,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default DirectRegister

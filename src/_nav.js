@@ -20,8 +20,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Register',
-    to: '/register/user',
+    name: 'Direct Register',
+    to: '/direct/register',
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
   },
   {
