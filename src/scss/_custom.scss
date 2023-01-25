@@ -91,8 +91,12 @@ button:focus:not(:focus-visible) {
   backdrop-filter: saturate(200%) blur(25px);
 }
 
-.app-bg {
+.app-bg-inactive {
   background-color: #f11a2e;
+}
+
+.app-bg-active {
+  background-color: #199603;
 }
 
 .app-bg-2 {

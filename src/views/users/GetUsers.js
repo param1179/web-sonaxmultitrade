@@ -1,23 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { usersApi } from 'src/APIs'
 import { Tree } from 'react-organizational-chart'
 import styled from 'styled-components'
 import { getProfileData } from 'src/helpers/tokenLS'
 import brand from 'src/assets/sonaxmultitrade.png'
 import FamilyTree from 'src/components/FamilyTree'
-import { CCard, CCardBody, CCardHeader, CCol, CImage, CRow } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CImage, CRow } from '@coreui/react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import CIcon from '@coreui/icons-react'
+import { cilArrowTop } from '@coreui/icons'
 
 const StyledNode = styled.div`
   padding: 5px;
   display: inline-block;
 `
 function GetUsers() {
+  let instancesCount = 0
+  const { state = null } = useLocation()
+  const location = useLocation()
+  const navigate = useNavigate()
   const user = getProfileData()
-  const { isLoading, data } = usersApi.useGetTeams(user._id)
+  const [reload, setReload] = useState('')
+  const { data } = usersApi.useGetTeams(state && state?.userId ? state?.userId : user._id)
   var childs = data?.data?.childs
   if (data?.data?.childs[0].placement === 'Right') {
     childs = data?.data?.childs.reverse()
   }
+  useEffect(() => {
+    navigate(location.pathname, {})
+  }, [reload])
 
   return (
     <CRow>
@@ -27,6 +38,12 @@ function GetUsers() {
             <strong>All Team&apos;s Tree</strong>
           </CCardHeader>
           <CCardBody className="divScroll">
+            {state && state?.userId && (
+              <CButton size="sm" onClick={() => setReload(Math.random())}>
+                {'Go to top'}
+                <CIcon icon={cilArrowTop} />
+              </CButton>
+            )}
             <Tree
               lineWidth={'2px'}
               lineColor={'green'}
@@ -34,9 +51,17 @@ function GetUsers() {
               label={
                 <StyledNode>
                   <CImage src={brand} height={50} alt="Logo" />
-                  <div className="border border-success tree-content app-bg">
-                    <div>{user.uId ? user.uId : ''}</div>
-                    <div>{user.firstName}</div>
+                  <div
+                    className={`border border-success tree-content ${
+                      !state
+                        ? 'app-bg-active'
+                        : data?.data?.parentId?.isCompleted
+                        ? 'app-bg-active'
+                        : 'app-bg-inactive'
+                    }`}
+                  >
+                    <div>{data?.data?.parentId?.uId ? data?.data?.parentId?.uId : ''}</div>
+                    <div>{data?.data?.parentId?.firstName}</div>
                   </div>
                 </StyledNode>
               }
@@ -45,6 +70,7 @@ function GetUsers() {
                 childs?.map((child, n) => {
                   return (
                     <FamilyTree
+                      count={instancesCount}
                       key={n}
                       item={child}
                       num={n}

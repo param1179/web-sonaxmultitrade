@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { TreeNode } from 'react-organizational-chart'
 import PropTypes from 'prop-types'
@@ -7,22 +7,33 @@ import { useNavigate } from 'react-router-dom'
 import brand from 'src/assets/sonaxmultitrade.png'
 import { CImage } from '@coreui/react'
 
-function FamilyTree({ item, num, StyledNode, pId }) {
+function FamilyTree({ count, item, num, StyledNode, pId }) {
   const navigation = useNavigate()
   const { childId, parentId } = item
+
+  useEffect(() => {
+    count += 1
+  }, [])
+
   const renderBranch = () => {
     return (
       <StyledNode>
         <div
-          role={!childId.uId ? 'button' : ''}
+          // role={!childId.uId ? 'button' : ''}
+          role="button"
           onClick={() =>
-            !childId.uId &&
-            navigation('/add', {
-              state: {
-                pId: typeof pId === 'string' ? pId : parentId,
-                placement: num === 0 ? 'Left' : 'Right',
-              },
-            })
+            !childId.uId
+              ? navigation('/add', {
+                  state: {
+                    pId: typeof pId === 'string' ? pId : parentId,
+                    placement: num === 0 ? 'Left' : 'Right',
+                  },
+                })
+              : navigation('/users', {
+                  state: {
+                    userId: childId._id,
+                  },
+                })
           }
         >
           <CImage src={brand} height={50} alt="Logo" />
@@ -30,7 +41,9 @@ function FamilyTree({ item, num, StyledNode, pId }) {
             className={
               !childId.uId
                 ? 'border border-success tree-content app-bg-2'
-                : 'border border-success tree-content app-bg'
+                : `border border-success tree-content ${
+                    !childId.isCompleted ? 'app-bg-inactive' : 'app-bg-active'
+                  }`
             }
           >
             <div>{childId.uId ? childId.uId : ''}</div>
@@ -52,7 +65,7 @@ function FamilyTree({ item, num, StyledNode, pId }) {
   }
 
   const newChild = () => {
-    if (hasChildren) {
+    if (hasChildren && count < 6) {
       return childs.map((child, n) => {
         return isloading ? (
           <>OK</>
