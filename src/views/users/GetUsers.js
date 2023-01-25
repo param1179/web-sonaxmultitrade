@@ -54,7 +54,9 @@ function GetUsers() {
                   <div
                     className={`border border-success tree-content ${
                       !state
-                        ? 'app-bg-active'
+                        ? data?.data?.parentId?.isCompleted
+                          ? 'app-bg-active'
+                          : 'app-bg-top'
                         : data?.data?.parentId?.isCompleted
                         ? 'app-bg-active'
                         : 'app-bg-inactive'
