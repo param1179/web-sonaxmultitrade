@@ -1,71 +1,81 @@
-import { CPagination, CPaginationItem } from '@coreui/react'
 import React from 'react'
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import { DOTS, usePagination } from 'src/customHooks/usePagination'
 
-function Pagination({ data, setPage }) {
+const Pagination = (props) => {
+  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props
+
+  const paginationRange = usePagination({
+    currentPage,
+    totalCount,
+    siblingCount,
+    pageSize,
+  })
+
+  if (currentPage === 0 || paginationRange.length < 2) {
+    return null
+  }
+
+  const onNext = () => {
+    onPageChange(currentPage + 1)
+  }
+
+  const onPrevious = () => {
+    onPageChange(currentPage - 1)
+  }
+
+  let lastPage = paginationRange[paginationRange.length - 1]
   return (
-    <CPagination align="end" aria-label="Page navigation example">
-      <CPaginationItem onClick={() => setPage(data.page - 1)} disabled={!data.hasPrevPage}>
-        Previous
-      </CPaginationItem>
-      <CPaginationItem onClick={() => setPage(1)} active={data.page === 1 ? true : false}>
-        1
-      </CPaginationItem>
-      {data.totalPages > 1 && (
-        <>
-          {data.totalPages > 1 && (
-            <CPaginationItem onClick={() => setPage(2)} active={data.page === 2 ? true : false}>
-              2
-            </CPaginationItem>
-          )}
-          {data.totalPages > 2 && (
-            <CPaginationItem onClick={() => setPage(3)} active={data.page === 3 ? true : false}>
-              3
-            </CPaginationItem>
-          )}
-          {data.page === 4 && (
-            <CPaginationItem onClick={() => setPage(4)} active={data.page === 4 ? true : false}>
-              4
-            </CPaginationItem>
-          )}
-          {data.totalPages > 4 && <CPaginationItem>...</CPaginationItem>}
-          {data.page > 4 && data.totalPages - 1 !== data.page && data.totalPages !== data.page && (
-            <CPaginationItem onClick={() => setPage()} active={data.page > 4 ? true : false}>
-              {data.page}
-            </CPaginationItem>
-          )}
-          {data.totalPages > 5 && data.page !== data.totalPages - 2 && (
-            <CPaginationItem>...</CPaginationItem>
-          )}
+    <ul className={classnames('pagination-container', { [className]: className })}>
+      <li
+        className={classnames('pagination-item', {
+          disabled: currentPage === 1,
+        })}
+        onClick={onPrevious}
+      >
+        <div className="arrow left" />
+      </li>
+      {paginationRange.map((pageNumber, i) => {
+        if (pageNumber === DOTS) {
+          return (
+            <li key={i} className="pagination-item dots">
+              &#8230;
+            </li>
+          )
+        }
 
-          {data.totalPages > 5 && (
-            <CPaginationItem
-              onClick={() => setPage(data.totalPages - 1)}
-              active={data.totalPages - 1 === data.page ? true : false}
-            >
-              {data.totalPages - 1}
-            </CPaginationItem>
-          )}
-          {data.totalPages > 5 && (
-            <CPaginationItem
-              onClick={() => setPage(data.totalPages)}
-              active={data.totalPages === data.page ? true : false}
-            >
-              {data.totalPages}
-            </CPaginationItem>
-          )}
-        </>
-      )}
-      <CPaginationItem onClick={() => setPage(data.page + 1)} disabled={!data.hasNextPage}>
-        Next
-      </CPaginationItem>
-    </CPagination>
+        return (
+          <li
+            key={i}
+            className={classnames('pagination-item', {
+              selected: pageNumber === currentPage,
+            })}
+            onClick={() => onPageChange(pageNumber)}
+          >
+            {pageNumber}
+          </li>
+        )
+      })}
+      <li
+        className={classnames('pagination-item', {
+          disabled: currentPage === lastPage,
+        })}
+        onClick={onNext}
+      >
+        <div className="arrow right" />
+      </li>
+    </ul>
   )
 }
 
 export default Pagination
 
 Pagination.propTypes = {
-  data: PropTypes.object,
-  setPage: PropTypes.func,
+  onPageChange: PropTypes.func,
+  totalCount: PropTypes.number,
+  siblingCount: PropTypes.number,
+  currentPage: PropTypes.number,
+  pageSize: PropTypes.number,
+  className: PropTypes.string,
 }

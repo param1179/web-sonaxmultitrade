@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunksonaxmultitrade=self.webpackChunksonaxmultitrade||[]).push([[955],{60955:function(e,s,t){t.r(s);var a=t(29439),n=t(72791),u=(t(91933),t(82035)),r=(t(58393),t(80184));s.default=function(){var e=(0,n.useState)(10),s=(0,a.Z)(e,2),t=s[0],i=(s[1],(0,n.useState)(1)),l=(0,a.Z)(i,2),o=l[0],c=(l[1],(0,n.useState)("")),d=(0,a.Z)(c,2),f=d[0],h=(d[1],u.Nq.useGetUsers(t,o,f)),k=(h.isLoading,h.data);return console.log(k),(0,r.jsx)("div",{children:(0,r.jsx)("strong",{children:"GetUsers"})})}}}]);
-//# sourceMappingURL=955.40de7e6c.chunk.js.map

@@ -36,6 +36,15 @@ function GetUsers() {
         <CCard className="mb-4">
           <CCardHeader>
             <strong>All Team&apos;s Tree</strong>
+            <CButton color="primary mx-2" onClick={''} className="float-end">
+              Direct: {data?.direct.length}
+            </CButton>
+            {/* <CButton color="primary mx-2" onClick={''} className="float-end">
+              Right: {data?.direct.length}
+            </CButton>
+            <CButton color="primary mx-2" onClick={''} className="float-end">
+              Left: {data?.direct.length}
+            </CButton> */}
           </CCardHeader>
           <CCardBody className="divScroll">
             {state && state?.userId && (
