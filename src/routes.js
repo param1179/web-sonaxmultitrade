@@ -7,6 +7,7 @@ const GetAdminUsers = React.lazy(() => import('./views/adminUsers/GetUsers'))
 const AddUser = React.lazy(() => import('./views/users/AddUser'))
 const AdminAddUser = React.lazy(() => import('./views/adminUsers/AddUser'))
 const DirectRegister = React.lazy(() => import('./views/users/DirectRegister'))
+const Emis = React.lazy(() => import('./views/users/Emis'))
 const ChangePassword = React.lazy(() => import('./views/users/ChangePassword'))
 
 const routes = [
@@ -21,6 +22,7 @@ const routes = [
   { path: '/adminAdd', name: 'Admin Add User', element: AdminAddUser },
   { path: '/activities', name: 'Users Activities', element: AddUser },
   { path: '/coupons', name: 'Coupons', element: AddUser },
+  { path: '/emis', name: 'Installments', element: Emis },
   { path: '/password', name: 'Change Password', element: ChangePassword },
 ]
 
