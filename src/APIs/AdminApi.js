@@ -37,6 +37,8 @@ export const fetchManage = async (type, page, search) =>
 export const fetchUsers = async (limit, page, search) =>
   await axios.get(`admin/users?page=${page}&limit=${limit}&search=${search}`)
 
+export const fetchAllUsers = async () => await axios.get(`admin/users/list`)
+
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
 const fetchPackages = async () => await axios.get(`admin/packages`)
 
@@ -153,6 +155,12 @@ export const useManage = (type, page, search) => {
 
 export const useGetUsers = (limit, page, search) => {
   return useQuery(`admin/users/${page}/${limit}/${search}`, () => fetchUsers(limit, page, search), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetAllUsers = () => {
+  return useQuery(`admin/users/list`, () => fetchAllUsers(), {
     refetchOnWindowFocus: false,
   })
 }

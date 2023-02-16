@@ -22,7 +22,7 @@ const vars = {
 
 const AddUser = () => {
   const { data: packages } = adminApi.useGetPackages()
-  const { isLoading, data: users } = adminApi.useGetUsers()
+  const { isLoading, data: users } = adminApi.useGetAllUsers()
 
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
