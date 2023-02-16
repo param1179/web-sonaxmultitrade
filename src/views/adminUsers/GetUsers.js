@@ -19,10 +19,11 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert'
 
 function GetUsers() {
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [limit, setLimit] = useState(10)
   const [page, setPage] = useState(10)
@@ -130,11 +131,12 @@ function GetUsers() {
                         </h5>
                       </CTableDataCell>
                       <CTableDataCell>
-                        <Link to={'/details'}>
-                          <h5>
-                            <CBadge color="success">View</CBadge>
-                          </h5>
-                        </Link>
+                        <h5
+                          role="button"
+                          onClick={() => navigate('/payments', { state: { id: item._id } })}
+                        >
+                          <CBadge color="success">View</CBadge>
+                        </h5>
                       </CTableDataCell>
                     </CTableRow>
                   ))}

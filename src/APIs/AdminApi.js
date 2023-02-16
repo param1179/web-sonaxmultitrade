@@ -9,6 +9,8 @@ import { TokenLS } from '../helpers'
 const fetchProfile = async () => await axios.get('users/profile')
 const fetchTeams = async (pId) => await axios.get(`users/teams/${pId}`)
 const fetchUpdateUser = async (id) => await axios.get(`admin/user/${id}`)
+const fetchUpdatePayment = async (id) => await axios.get(`admin/payment/${id}`)
+const fetchInstallments = async (id) => await axios.get(`admin/installments/${id}`)
 
 const fetchAdmins = async () => await axios.get('admin/gets')
 
@@ -42,6 +44,12 @@ const fetchDeleteUser = async (id) => await axios.delete(`admin/deleteUser/${id}
 
 export const useProfile = () => {
   return useQuery('users/profile', fetchProfile, {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useIntallments = (id) => {
+  return useQuery(`admin/installments/${id}`, () => fetchInstallments(id), {
     refetchOnWindowFocus: false,
   })
 }
@@ -171,4 +179,8 @@ export const useDeleteUser = () => {
 
 export const useUpdateUser = () => {
   return useMutation(fetchUpdateUser)
+}
+
+export const useUpdatePayment = () => {
+  return useMutation(fetchUpdatePayment)
 }
