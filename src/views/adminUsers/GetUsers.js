@@ -133,7 +133,15 @@ function GetUsers() {
                       <CTableDataCell>
                         <h5
                           role="button"
-                          onClick={() => navigate('/payments', { state: { id: item._id } })}
+                          onClick={() =>
+                            navigate('/payments', {
+                              state: {
+                                id: item._id,
+                                name: item.firstName + ' ' + item.lastName,
+                                uId: item.uId,
+                              },
+                            })
+                          }
                         >
                           <CBadge color="success">View</CBadge>
                         </h5>

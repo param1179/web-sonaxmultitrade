@@ -20,7 +20,7 @@ import { confirmAlert } from 'react-confirm-alert'
 
 function Installments() {
   const { state } = useLocation()
-  const { id } = state
+  const { id, name, uId } = state
   const { isLoading, data: resp, refetch } = adminApi.useIntallments(id)
   const update = adminApi.useUpdatePayment()
 
@@ -51,7 +51,9 @@ function Installments() {
       <CCol md={12}>
         <CCard>
           <CCardHeader>
-            <strong>Installments Chart</strong>
+            <strong>
+              {name}&apos;s {'(' + uId + ')'} Installments Chart
+            </strong>
           </CCardHeader>
           <CCardBody>
             <CRow className="table-row">
