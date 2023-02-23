@@ -119,3 +119,14 @@ button:focus:not(:focus-visible) {
 .divScroll {
   overflow-y: scroll;
 }
+
+.modal-dialog {
+  position: fixed;
+  margin: auto;
+  width: 50%;
+  height: 100%;
+  right: 0px;
+}
+.modal-content {
+  height: 100%;
+}
