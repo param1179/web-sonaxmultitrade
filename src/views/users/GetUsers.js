@@ -67,14 +67,14 @@ function GetUsers() {
                 onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}
                 className="float-end"
               >
-                Right: {data?.direct.length}
+                Right
               </CButton>
               <CButton
                 color="primary mx-2"
                 onClick={() => setVisible({ visible: !visible.visible, position: 'Left' })}
                 className="float-end"
               >
-                Left: {data?.direct.length}
+                Left
               </CButton>
             </CCardHeader>
             <CCardBody className="divScroll">
@@ -133,7 +133,7 @@ function GetUsers() {
         onClose={() => setVisible({ ...visible, visible: false })}
       >
         <CModalHeader>
-          <CModalTitle>Left Side Team List</CModalTitle>
+          <CModalTitle>{visible.position} Side Team List</CModalTitle>
         </CModalHeader>
         <CModalBody>
           {!isLoading && <LeftRightTeam position={visible.position} userId={userId} />}
