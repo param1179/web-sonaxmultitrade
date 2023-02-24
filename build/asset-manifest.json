@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "./static/css/main.43880e91.css",
+    "main.css": "./static/css/main.9e9b426e.css",
     "main.js": "./static/js/main.f8b583f8.js",
     "static/css/783.576fae19.chunk.css": "./static/css/783.576fae19.chunk.css",
     "static/js/783.92b21677.chunk.js": "./static/js/783.92b21677.chunk.js",
@@ -29,7 +29,7 @@
     "static/media/sonaxmultitrade.png": "./static/media/sonaxmultitrade.29f6ec52e5160d1f3bbb.png",
     "static/media/sonaxmultitrade.svg": "./static/media/sonaxmultitrade.753fc9fec7f63d022aeb1c676ec6de1d.svg",
     "index.html": "./index.html",
-    "main.43880e91.css.map": "./static/css/main.43880e91.css.map",
+    "main.9e9b426e.css.map": "./static/css/main.9e9b426e.css.map",
     "main.f8b583f8.js.map": "./static/js/main.f8b583f8.js.map",
     "783.576fae19.chunk.css.map": "./static/css/783.576fae19.chunk.css.map",
     "783.92b21677.chunk.js.map": "./static/js/783.92b21677.chunk.js.map",
@@ -57,7 +57,7 @@
     "925.d35840c0.chunk.js.map": "./static/js/925.d35840c0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.43880e91.css",
+    "static/css/main.9e9b426e.css",
     "static/js/main.f8b583f8.js"
   ]
 }
