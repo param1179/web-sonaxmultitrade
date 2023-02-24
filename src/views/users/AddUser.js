@@ -39,7 +39,7 @@ const AddUser = () => {
       initialValues: {
         parentId: state?.pId ? state.pId : user && user._id,
         sponserId: user && user._id,
-        packageId: packages?.data[0]._id,
+        packageId: packages?.data[0]?._id,
         placement: state?.placement ? state.placement : 'Left',
         firstName: '',
         lastName: '',
@@ -69,6 +69,7 @@ const AddUser = () => {
   const mutateCreate = usersApi.useCreateUser()
 
   const onCreate = async (body) => {
+    body.packageId = packages?.data[0]?._id
     const resp = await mutateCreate.mutateAsync(body)
     if (resp?.status === 200) {
       resetForm()

@@ -31,7 +31,6 @@ const DirectRegister = () => {
   const [toast, addToast] = useState(0)
   const user = getProfileData()
   const { isLoading, data: packages } = usersApi.useGetPackages()
-
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm } = useFormik({
     initialValues: {
       parentId: '',
@@ -66,6 +65,7 @@ const DirectRegister = () => {
   const mutateCreate = usersApi.useRegisterUser()
 
   const onCreate = async (body) => {
+    body.packageId = packages?.data[0]?._id
     const resp = await mutateCreate.mutateAsync(body)
     if (resp?.status === 200) {
       resetForm()
