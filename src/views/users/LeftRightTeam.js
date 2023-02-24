@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { usersApi } from 'src/APIs'
 import {
   CBadge,
+  CHeader,
   CRow,
   CTable,
   CTableBody,
@@ -13,26 +14,21 @@ import {
 } from '@coreui/react'
 
 function LeftRightTeam({ position, userId }) {
-  var child = []
-  var done = false
-
-  getTeam(userId)
-  function getTeam(userId) {
-    const { isLoading, data: resp } = usersApi.useGetTeams(userId)
-    if (!isLoading) {
-      var childs = resp?.status === 200 ? resp?.data?.childs : []
-
-      const chi = childs.filter((child) => child.placement === position)
-      if (chi && chi.length !== 0 && chi[0]?.childId?._id !== null) {
-        child = [...child, chi[0]?.childId?._id !== null && chi[0].childId]
-        getTeam(chi[0]?.childId?._id)
-      }
-    }
-    done = true
-  }
+  const { isLoading, data: resp } = usersApi.useGetTeamList(position, userId)
 
   return (
     <CRow className="table-row">
+      <CHeader>
+        <h5>
+          <CBadge color={'primary'}>{'Total: ' + resp?.total}</CBadge>
+        </h5>
+        <h5>
+          <CBadge color={'success'}>{'Active: ' + resp?.active}</CBadge>
+        </h5>
+        <h5>
+          <CBadge color={'danger'}>{'Inactive: ' + resp?.inActive}</CBadge>
+        </h5>
+      </CHeader>
       <CTable align="middle" bordered className="mb-0 border" hover responsive striped>
         <CTableHead color="light">
           <CTableRow>
@@ -43,8 +39,8 @@ function LeftRightTeam({ position, userId }) {
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {done &&
-            child?.map((item, index) => (
+          {!isLoading &&
+            resp?.data.map((item, index) => (
               <CTableRow v-for="item in tableItems" key={index}>
                 <CTableDataCell>{index + 1}</CTableDataCell>
                 <CTableDataCell>

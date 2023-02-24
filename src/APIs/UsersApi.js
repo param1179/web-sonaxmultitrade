@@ -8,6 +8,8 @@ import { TokenLS } from '../helpers'
 
 const fetchProfile = async () => await axios.get('users/profile')
 const fetchTeams = async (pId) => await axios.get(`users/teams/${pId}`)
+const fetchTeamList = async (position, pId) =>
+  await axios.get(`users/teamList/${pId}?position=${position}`)
 
 const fetchAdmins = async () => await axios.get('admin/gets')
 
@@ -185,6 +187,12 @@ export const useIntallments = () => {
 
 export const useGetTeams = (id) => {
   return useQuery(`users/teams/${id}`, () => id && fetchTeams(id), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetTeamList = (position, id) => {
+  return useQuery(`users/teamList/${id}/${position}`, () => id && fetchTeamList(position, id), {
     refetchOnWindowFocus: false,
   })
 }
