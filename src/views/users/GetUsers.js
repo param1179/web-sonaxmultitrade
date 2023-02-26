@@ -17,11 +17,17 @@ import {
   CModalHeader,
   CModalTitle,
   CRow,
+  CTable,
+  CTableBody,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
 } from '@coreui/react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import CIcon from '@coreui/icons-react'
 import { cilArrowTop } from '@coreui/icons'
 import LeftRightTeam from './LeftRightTeam'
+import FamilyList from 'src/components/FamilyList'
 
 const StyledNode = styled.div`
   padding: 5px;
@@ -136,7 +142,30 @@ function GetUsers() {
           <CModalTitle>{visible.position} Side Team List</CModalTitle>
         </CModalHeader>
         <CModalBody>
-          {!isLoading && <LeftRightTeam position={visible.position} userId={userId} />}
+          <CRow>
+            <CTable align="middle" bordered className="mb-0 border" hover responsive striped>
+              <CTableHead color="light">
+                <CTableRow>
+                  <CTableHeaderCell>S. No.</CTableHeaderCell>
+                  <CTableHeaderCell>Name</CTableHeaderCell>
+                  <CTableHeaderCell>User Id</CTableHeaderCell>
+                  <CTableHeaderCell>Status</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {childs && (
+                  <FamilyList
+                    count={instancesCount}
+                    key={0}
+                    item={childs.filter((res) => res.placement === visible.position)[0]}
+                    num={0}
+                    StyledNode={StyledNode}
+                    pId={data?.data.parentId}
+                  />
+                )}
+              </CTableBody>
+            </CTable>
+          </CRow>
         </CModalBody>
       </CModal>
     </>
