@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { usersApi } from 'src/APIs'
 import { CBadge, CTableDataCell, CTableRow } from '@coreui/react'
 import { dateHelper } from 'src/helpers'
-
 function FamilyList({ count, item, num, StyledNode, pId }) {
   const { childId } = item
 
@@ -24,10 +23,17 @@ function FamilyList({ count, item, num, StyledNode, pId }) {
   const newChild = () => {
     if (hasChildren) {
       return childs.map((child, n) => {
-        return isloading ? (
+        return isloading && child?.childId?._id === null ? (
           <>OK</>
         ) : (
-          <FamilyList key={n} item={child} num={n} StyledNode={StyledNode} pId={pD} />
+          <FamilyList
+            count={count++}
+            key={n}
+            item={child}
+            num={n}
+            StyledNode={StyledNode}
+            pId={pD}
+          />
         )
       })
     }
@@ -38,7 +44,7 @@ function FamilyList({ count, item, num, StyledNode, pId }) {
     <>
       {childId._id !== null && (
         <CTableRow v-for="item in tableItems" key={num}>
-          <CTableDataCell>{num + 1}</CTableDataCell>
+          <CTableDataCell>{'#'}</CTableDataCell>
           <CTableDataCell>
             <div>{childId?.firstName + ' ' + childId?.lastName}</div>
             <div className="small text-medium-emphasis">
