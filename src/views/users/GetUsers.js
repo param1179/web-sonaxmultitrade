@@ -6,11 +6,13 @@ import { getProfileData } from 'src/helpers/tokenLS'
 import brand from 'src/assets/sonaxmultitrade.png'
 import FamilyTree from 'src/components/FamilyTree'
 import {
+  CBadge,
   CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
+  CHeader,
   CImage,
   CModal,
   CModalBody,
@@ -40,22 +42,37 @@ function GetUsers() {
   const navigate = useNavigate()
   const user = getProfileData()
   const [reload, setReload] = useState(1)
+  const [tabs, setTabs] = useState({ total: 0, active: 0, inActive: 0 })
   const [visible, setVisible] = useState({
     visible: false,
-    position: '',
+    position: 'Left',
   })
   useEffect(() => {
     navigate(location.pathname, {})
   }, [reload])
   const userId = state && state?.userId ? state?.userId : user._id
   const { isLoading, data } = usersApi.useGetTeams(userId)
+  const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
   var childs = data?.data?.childs
   if (data?.data?.childs[0].placement === 'Right') {
     childs = data?.data?.childs.reverse()
   }
+  useEffect(() => {
+    refetch()
+  }, [visible.position])
+  const sendDataToParent = (index) => {
+    if (index && index.length) {
+      setTabs({
+        total: index.length,
+        active: index.filter((res) => res.isCompleted).length,
+        inActive: index.filter((res) => !res.isCompleted).length,
+      })
+    }
+  }
 
   return (
     <>
+      {console.log(visible.position, '--', tbs)}
       <CRow>
         <CCol xs={12}>
           <CCard className="mb-4">
@@ -136,13 +153,28 @@ function GetUsers() {
       <CModal
         fullscreen="lg"
         visible={visible.visible}
-        onClose={() => setVisible({ ...visible, visible: false })}
+        onClose={() => {
+          setVisible({ ...visible, visible: false })
+        }}
       >
         <CModalHeader>
           <CModalTitle>{visible.position} Side Team List</CModalTitle>
         </CModalHeader>
         <CModalBody>
           <CRow>
+            {!load && (
+              <CHeader>
+                <h5>
+                  <CBadge color={'primary'}>{'Total: ' + tbs?.total}</CBadge>
+                </h5>
+                <h5>
+                  <CBadge color={'success'}>{'Active: ' + tbs?.active}</CBadge>
+                </h5>
+                <h5>
+                  <CBadge color={'danger'}>{'Inactive: ' + tbs?.inActive}</CBadge>
+                </h5>
+              </CHeader>
+            )}
             <CTable align="middle" bordered className="mb-0 border" hover responsive striped>
               <CTableHead color="light">
                 <CTableRow>
