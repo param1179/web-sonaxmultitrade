@@ -72,7 +72,6 @@ function GetUsers() {
 
   return (
     <>
-      {console.log(visible.position, '--', tbs)}
       <CRow>
         <CCol xs={12}>
           <CCard className="mb-4">
