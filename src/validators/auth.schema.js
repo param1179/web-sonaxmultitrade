@@ -99,6 +99,12 @@ export const createSchool = yup.object().shape({
   schoolName: yup.string().required('Name is require field!'),
 })
 
+export const createRewards = yup.object().shape({
+  rewardLevel: yup.string().required('Reward Level is require field!'),
+  onPairs: yup.number().required('Pairs is require field!'),
+  reward: yup.string().required('Reward name is require field!'),
+})
+
 export const userSignIn = yup.object().shape({
   uId: yup.string().required('UID is require field!'),
   password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),

@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const DashboardAdmin = React.lazy(() => import('./views/dashboard/DashboardAdmin'))
 const GetUsers = React.lazy(() => import('./views/users/GetUsers'))
 const GetAdminUsers = React.lazy(() => import('./views/adminUsers/GetUsers'))
+const Rewards = React.lazy(() => import('./views/adminUsers/Rewards'))
 const AddUser = React.lazy(() => import('./views/users/AddUser'))
 const AdminAddUser = React.lazy(() => import('./views/adminUsers/AddUser'))
 const DirectRegister = React.lazy(() => import('./views/users/DirectRegister'))
@@ -18,6 +19,7 @@ const routes = [
 
   { path: '/users', name: 'Users', element: GetUsers },
   { path: '/adminUsers', name: 'Users', element: GetAdminUsers },
+  { path: '/rewards', name: 'Users', element: Rewards },
   { path: '/add', name: 'Add User', element: AddUser },
   { path: '/direct', name: 'Direct Register', element: DirectRegister },
   { path: '/adminAdd', name: 'Admin Add User', element: AdminAddUser },

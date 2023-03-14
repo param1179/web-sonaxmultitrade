@@ -24,6 +24,7 @@ const fetchDeleteCoupon = async (id) => await axios.delete(`admin/coupon/${id}`)
 
 const fetchCreateAdmin = async (body) => await axios.post('admin/create', body)
 const fetchCreateAdminUser = async (body) => await axios.post('admin/users/add', body)
+const fetchCreateAdminRewards = async (body) => await axios.post('admin/rewards', body)
 const fetchCreateSchool = async (body) => await axios.post('admin/schools', body)
 const fetchCreateCoupon = async (body) => await axios.post('admin/coupon', body)
 
@@ -38,6 +39,7 @@ export const fetchUsers = async (limit, page, search) =>
   await axios.get(`admin/users?page=${page}&limit=${limit}&search=${search}`)
 
 export const fetchAllUsers = async () => await axios.get(`admin/users/list`)
+export const fetchRewards = async () => await axios.get(`admin/rewards`)
 
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
 const fetchPackages = async () => await axios.get(`admin/packages`)
@@ -112,6 +114,16 @@ export const useCreateAdminUser = (setErrors) => {
   })
 }
 
+export const useCreateAdminRewards = (setErrors) => {
+  return useMutation(fetchCreateAdminRewards, {
+    onError: (error) => {
+      if (error?.status === 400) {
+        setErrors({ email: error.message })
+      }
+    },
+  })
+}
+
 export const useCreateCoupon = () => {
   return useMutation(fetchCreateCoupon, {
     onError: (error) => {
@@ -161,6 +173,12 @@ export const useGetUsers = (limit, page, search) => {
 
 export const useGetAllUsers = () => {
   return useQuery(`admin/users/list`, () => fetchAllUsers(), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetRewards = () => {
+  return useQuery(`admin/rewards`, () => fetchRewards(), {
     refetchOnWindowFocus: false,
   })
 }

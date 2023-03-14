@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { adminApi } from 'src/APIs'
-import { Tree, TreeNode } from 'react-organizational-chart'
 import Pagination from 'src/components/Pagination'
 import {
   CBadge,
@@ -87,7 +86,7 @@ function GetUsers() {
                   <CFormInput
                     type="search"
                     className="me-2"
-                    placeholder={`Search: 'Email, Name'`}
+                    placeholder={`Search: 'User ID'`}
                     name="search"
                     value={search}
                     onChange={onChangeHandle}

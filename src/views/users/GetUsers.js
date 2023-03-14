@@ -159,7 +159,7 @@ function GetUsers() {
         <CModalHeader>
           <CModalTitle>{visible.position} Side Team List</CModalTitle>
         </CModalHeader>
-        <CModalBody>
+        <CModalBody className="overflow-auto">
           <CRow>
             {!load && (
               <CHeader>
