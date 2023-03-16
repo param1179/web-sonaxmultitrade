@@ -110,8 +110,21 @@ function Installments() {
                       <ul className="timeline">
                         {!load &&
                           rewards.rewards.map((res, i) => (
-                            <li key={i}>
-                              <p className="float-right">{res.rewardLevel}</p>
+                            <li key={i} className={res.onPairs <= pairs ? 'achive' : ''}>
+                              <p
+                                className={
+                                  res.onPairs <= pairs ? 'text-success float-right' : 'float-right'
+                                }
+                              >
+                                {res.rewardLevel} on {res.onPairs} Pairs
+                              </p>
+                              <p
+                                className={
+                                  res.onPairs <= pairs ? 'text-success float-right' : 'float-right'
+                                }
+                              >
+                                ({res.reward})
+                              </p>
                             </li>
                           ))}
                       </ul>
