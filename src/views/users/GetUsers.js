@@ -51,7 +51,7 @@ function GetUsers() {
     navigate(location.pathname, {})
   }, [reload])
   const userId = state && state?.userId ? state?.userId : user._id
-  const { isLoading, data } = usersApi.useGetTeams(userId)
+  const { data } = usersApi.useGetTeams(userId)
   const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
   var childs = data?.data?.childs
   if (data?.data?.childs[0].placement === 'Right') {
@@ -60,15 +60,6 @@ function GetUsers() {
   useEffect(() => {
     refetch()
   }, [visible.position])
-  const sendDataToParent = (index) => {
-    if (index && index.length) {
-      setTabs({
-        total: index.length,
-        active: index.filter((res) => res.isCompleted).length,
-        inActive: index.filter((res) => !res.isCompleted).length,
-      })
-    }
-  }
 
   return (
     <>
@@ -77,13 +68,6 @@ function GetUsers() {
           <CCard className="mb-4">
             <CCardHeader>
               <strong>All Team&apos;s Tree</strong>
-              {/* <CButton
-                color="primary mx-2"
-                onClick={() => setVisible(!visible)}
-                className="float-end"
-              >
-                Direct: {data?.direct.length}
-              </CButton> */}
               <CButton
                 color="primary mx-2"
                 onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}

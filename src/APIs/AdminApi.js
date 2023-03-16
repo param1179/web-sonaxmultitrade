@@ -144,6 +144,15 @@ export const useCreateSchool = () => {
   })
 }
 
+export const useUserTabs = (position, id) => {
+  return useQuery(`admin/userTabs/${id}/${position}`, () => id && fetchUserTabs(position, id), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+const fetchUserTabs = async (position, pId) =>
+  await axios.get(`admin/userTabs/${pId}?position=${position}`)
+
 export const useLogOut = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
