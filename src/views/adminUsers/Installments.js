@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   CBadge,
   CCard,
@@ -24,10 +24,20 @@ function Installments() {
   const { id, name, uId } = state
   const { isLoading, data: resp, refetch } = adminApi.useIntallments(id)
   const { isLoading: load, data: rewards } = adminApi.useGetRewards()
-  const { isLoading: loadLeft, data: tbsLeft } = adminApi.useUserTabs('Left', id)
-  const { isLoading: loadRight, data: tbsRight } = adminApi.useUserTabs('Right', id)
-  const pairs = !loadLeft && !loadRight ? Math.floor((tbsRight.active + tbsLeft.active) / 2) : 0
+  const { isLoading: loadLeft, data: tbsLeft, refetch: reLeft } = adminApi.useUserTabs('Left', id)
+  const {
+    isLoading: loadRight,
+    data: tbsRight,
+    refetch: reRight,
+  } = adminApi.useUserTabs('Right', id)
+  const lessSide = tbsRight?.active <= tbsLeft?.active ? tbsRight?.active : tbsLeft?.active
+  const pairs = Math.floor((lessSide * 2) / 2)
   const update = adminApi.useUpdatePayment()
+
+  useEffect(() => {
+    reLeft()
+    reRight()
+  }, [id])
 
   const statusHandler = async (event) => {
     const id = event.target.id
@@ -79,7 +89,7 @@ function Installments() {
                       <CCol sm={6}>
                         <CRow>
                           <CBadge className="mb-1" color="info">
-                            Right Total {tbsRight.active}
+                            Right Total {tbsRight.total}
                           </CBadge>
                           <CBadge className="mb-1" color="success">
                             Right Active {tbsRight.active}
@@ -172,7 +182,7 @@ function Installments() {
                                 id={item._id}
                                 role={!item.status ? 'button' : undefined}
                                 color={item.status ? 'success' : 'danger'}
-                                onClick={() => (!item.status ? statusHandler() : '')}
+                                onClick={(e) => (!item.status ? statusHandler(e) : '')}
                               >
                                 {item.status ? 'Paid' : 'Pay'}
                               </CBadge>
