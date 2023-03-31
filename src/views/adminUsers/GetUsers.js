@@ -73,7 +73,7 @@ function GetUsers() {
   }, [])
 
   const updateUser = (id) => {
-    navigate(`/user/${id}`)
+    navigate(`/${id}`)
   }
 
   return (

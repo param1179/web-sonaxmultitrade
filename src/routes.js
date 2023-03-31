@@ -34,7 +34,7 @@ const routes = [
   { path: '/prizes', name: 'Users', element: Prizes },
 
   { path: '/wallet', name: 'Wallet', element: Wallet },
-  { path: '/user/:id', name: 'Wallet', element: UserUpdate },
+  { path: '/:id', name: 'Wallet', element: UserUpdate },
   { path: '/password', name: 'Change Password', element: ChangePassword },
 ]
 
