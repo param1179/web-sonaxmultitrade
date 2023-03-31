@@ -43,6 +43,7 @@ const fetchPackages = async () => await axios.get(`users/packages`)
 const fetchInstallments = async () => await axios.get(`users/installments`)
 
 const fetchDeleteUser = async (id) => await axios.delete(`admin/deleteUser/${id}`)
+export const fetchRewards = async () => await axios.get(`users/rewards`)
 
 export const useProfile = () => {
   return useQuery('users/profile', fetchProfile, {
@@ -52,6 +53,12 @@ export const useProfile = () => {
 
 export const useServices = () => {
   return useQuery('get/services', fetchServices, {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetRewards = () => {
+  return useQuery(`users/rewards`, () => fetchRewards(), {
     refetchOnWindowFocus: false,
   })
 }

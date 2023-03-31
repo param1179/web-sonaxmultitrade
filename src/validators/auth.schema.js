@@ -105,6 +105,17 @@ export const createRewards = yup.object().shape({
   reward: yup.string().required('Reward name is require field!'),
 })
 
+export const updateUser = yup.object().shape({
+  firstName: yup.string().required('First name is require field!'),
+  lastName: yup.string().required('Last name is require field!'),
+  mobile: yup
+    .string()
+    .matches(HELP.phoneRegExp, 'Phone number is not valid')
+    .required('Mobile is require field!')
+    .min(10, 'Phone number too short')
+    .max(10, 'Phone number too long'),
+})
+
 export const userSignIn = yup.object().shape({
   uId: yup.string().required('UID is require field!'),
   password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),

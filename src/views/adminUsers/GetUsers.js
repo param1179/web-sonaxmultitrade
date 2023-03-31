@@ -72,6 +72,10 @@ function GetUsers() {
     handleSearch('')
   }, [])
 
+  const updateUser = (id) => {
+    navigate(`/user/${id}`)
+  }
+
   return (
     <CRow>
       <CCol md={12}>
@@ -129,7 +133,7 @@ function GetUsers() {
                           </CBadge>
                         </h5>
                       </CTableDataCell>
-                      <CTableDataCell>
+                      <CTableDataCell className="gap-2">
                         <h5
                           role="button"
                           onClick={() =>
@@ -143,6 +147,11 @@ function GetUsers() {
                           }
                         >
                           <CBadge color="success">View</CBadge>
+                        </h5>
+                        <h5 onClick={() => updateUser(item._id)}>
+                          <CBadge role="button" color="success">
+                            Edit
+                          </CBadge>
                         </h5>
                       </CTableDataCell>
                     </CTableRow>

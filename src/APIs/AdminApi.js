@@ -9,6 +9,7 @@ import { TokenLS } from '../helpers'
 const fetchProfile = async () => await axios.get('users/profile')
 const fetchTeams = async (pId) => await axios.get(`users/teams/${pId}`)
 const fetchUpdateUser = async (id) => await axios.get(`admin/user/${id}`)
+const fetchEditUser = async ({ id, body }) => await axios.put(`admin/user/${id}`, body)
 const fetchUpdatePayment = async (id) => await axios.get(`admin/payment/${id}`)
 const fetchInstallments = async (id) => await axios.get(`admin/installments/${id}`)
 
@@ -42,6 +43,7 @@ export const fetchAllUsers = async () => await axios.get(`admin/users/list`)
 export const fetchRewards = async () => await axios.get(`admin/rewards`)
 
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
+const fetchUser = async (id) => await axios.get(`admin/info/${id}`)
 const fetchPackages = async () => await axios.get(`admin/packages`)
 
 const fetchDeleteUser = async (id) => await axios.delete(`admin/deleteUser/${id}`)
@@ -180,6 +182,12 @@ export const useGetUsers = (limit, page, search) => {
   })
 }
 
+export const useGetUser = (id) => {
+  return useQuery(`admin/info/${id}`, () => fetchUser(id), {
+    refetchOnWindowFocus: false,
+  })
+}
+
 export const useGetAllUsers = () => {
   return useQuery(`admin/users/list`, () => fetchAllUsers(), {
     refetchOnWindowFocus: false,
@@ -214,6 +222,10 @@ export const useDeleteUser = () => {
 
 export const useUpdateUser = () => {
   return useMutation(fetchUpdateUser)
+}
+
+export const useEditUser = () => {
+  return useMutation(fetchEditUser)
 }
 
 export const useUpdatePayment = () => {
