@@ -18,7 +18,7 @@ import {
 import { usersApi } from 'src/APIs'
 import { dateHelper } from 'src/helpers'
 import CIcon from '@coreui/icons-react'
-import { cilChartPie, cilWallet } from '@coreui/icons'
+import { cil3d, cilChartPie, cilWallet } from '@coreui/icons'
 
 function Wallet() {
   const [wallet] = useState(false)
@@ -36,7 +36,17 @@ function Wallet() {
               progress={{ value: 0 }}
               text="Widget helper text"
               title="Wallet Balance"
-              value="$ 0"
+              value="Rs. 0"
+            />
+            <CWidgetStatsC
+              className="mb-3"
+              icon={<CIcon icon={cil3d} height={36} />}
+              color="success"
+              inverse
+              progress={{ value: 0 }}
+              text="Widget helper text"
+              title="Points"
+              value="0"
             />
           </CCol>
           <CCol md={8}>
