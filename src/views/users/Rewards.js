@@ -42,8 +42,11 @@ const Rewards = () => {
         })
     }
     fetchData()
-    getPairs()
   }, [])
+
+  useEffect(() => {
+    getPairs()
+  }, [rightActive])
 
   const getPairs = () => {
     const lessSide = rightActive <= leftActive ? rightActive : leftActive
@@ -58,7 +61,7 @@ const Rewards = () => {
           <CCardHeader>
             <strong>Rewards</strong>
             <CBadge color="success" className="float-end mx-2">
-              Total Pairs: {pairs}
+              Total Pairs: {pairs && pairs}
             </CBadge>
             <CBadge color="success" className="float-end mx-2">
               Right Active: {rightActive}
