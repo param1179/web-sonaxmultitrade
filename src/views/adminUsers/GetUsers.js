@@ -20,6 +20,7 @@ import {
 } from '@coreui/react'
 import { Link, useNavigate } from 'react-router-dom'
 import { confirmAlert } from 'react-confirm-alert'
+import { dateHelper } from 'src/helpers'
 
 function GetUsers() {
   const navigate = useNavigate()
@@ -116,7 +117,11 @@ function GetUsers() {
                       <CTableDataCell>
                         <div>{item.firstName + ' ' + item.lastName}</div>
                         <div className="small text-medium-emphasis">
-                          <span>{'New |'}</span> Registered on: {'01/02/2023'}
+                          Registered on: {dateHelper.formatRegister(item.createdAt)}
+                        </div>
+                        <div className="small text-medium-emphasis">
+                          {item.isCompleted &&
+                            `Active on: ${dateHelper.formatRegister(item.updatedAt)}`}
                         </div>
                       </CTableDataCell>
 
