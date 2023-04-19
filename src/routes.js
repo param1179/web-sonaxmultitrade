@@ -27,8 +27,6 @@ const routes = [
   { path: '/add', name: 'Add User', element: AddUser },
   { path: '/direct', name: 'Direct Register', element: DirectRegister },
   { path: '/adminAdd', name: 'Admin Add User', element: AdminAddUser },
-  { path: '/activities', name: 'Users Activities', element: AddUser },
-  { path: '/coupons', name: 'Coupons', element: AddUser },
   { path: '/payments', name: 'Installments', element: Installments },
   { path: '/emis', name: 'Installments', element: Emis },
   { path: '/prizes', name: 'Users', element: Prizes },

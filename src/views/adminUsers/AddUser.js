@@ -59,6 +59,7 @@ const AddUser = () => {
   const mutateCreate = adminApi.useCreateAdminUser()
 
   const onCreate = async (body) => {
+    body.packageId = packages?.data[0]?._id
     const resp = await mutateCreate.mutateAsync(body)
     if (resp?.status === 200) {
       resetForm()
