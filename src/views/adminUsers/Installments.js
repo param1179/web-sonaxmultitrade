@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CBadge,
   CCard,
@@ -18,26 +18,42 @@ import { adminApi } from 'src/APIs'
 import { useLocation } from 'react-router-dom'
 import { dateHelper } from 'src/helpers'
 import { confirmAlert } from 'react-confirm-alert'
+import axios from 'src/axios'
 
 function Installments() {
   const { state } = useLocation()
   const { id, name, uId } = state
+  const [leftActive, setLeftActive] = useState(0)
+  const [rightActive, setRightActive] = useState(0)
+  const [pairs, setPairs] = useState(0)
   const { isLoading, data: resp, refetch } = adminApi.useIntallments(id)
   const { isLoading: load, data: rewards } = adminApi.useGetRewards()
-  const { isLoading: loadLeft, data: tbsLeft, refetch: reLeft } = adminApi.useUserTabs('Left', id)
-  const {
-    isLoading: loadRight,
-    data: tbsRight,
-    refetch: reRight,
-  } = adminApi.useUserTabs('Right', id)
-  const lessSide = tbsRight?.active <= tbsLeft?.active ? tbsRight?.active : tbsLeft?.active
-  const pairs = Math.floor((lessSide * 2) / 2)
   const update = adminApi.useUpdatePayment()
 
   useEffect(() => {
-    reLeft()
-    reRight()
-  }, [id])
+    async function fetchData() {
+      await axios
+        .get(`admin/userTabs/${id}?position=Left`)
+        .then((response) => {
+          setLeftActive(response?.active)
+        })
+        .then(async (casesHeaderFields) => await axios.get(`admin/userTabs/${id}?position=Right`))
+        .then((response) => {
+          setRightActive(response?.active)
+        })
+    }
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    getPairs()
+  }, [rightActive])
+
+  const getPairs = () => {
+    const lessSide = rightActive <= leftActive ? rightActive : leftActive
+    const pair = Math.floor((lessSide * 2) / 2)
+    setPairs(pair)
+  }
 
   const statusHandler = async (event) => {
     const id = event.target.id
@@ -69,52 +85,21 @@ function Installments() {
             <CCard className="mb-2">
               <CCardHeader>
                 <strong>Rewards Achievement Chart</strong>
+                <div>
+                  <CBadge color="success" className="mx-2">
+                    Left Active: {leftActive}
+                  </CBadge>
+                  <CBadge color="success" className="mx-2">
+                    Right Active: {rightActive}
+                  </CBadge>
+                  <CBadge color="success" className="mx-2">
+                    Total Pairs: {pairs && pairs}
+                  </CBadge>
+                </div>
               </CCardHeader>
               <CCardBody>
                 <CContainer>
                   <CRow>
-                    {!loadLeft && (
-                      <CCol sm={6}>
-                        <CRow>
-                          <CBadge className="mb-1" color="info">
-                            Left Total {tbsLeft.total}
-                          </CBadge>
-                          <CBadge className="mb-1" color="success">
-                            Left Active {tbsLeft.active}
-                          </CBadge>
-                        </CRow>
-                      </CCol>
-                    )}
-                    {!loadRight && (
-                      <CCol sm={6}>
-                        <CRow>
-                          <CBadge className="mb-1" color="info">
-                            Right Total {tbsRight.total}
-                          </CBadge>
-                          <CBadge className="mb-1" color="success">
-                            Right Active {tbsRight.active}
-                          </CBadge>
-                        </CRow>
-                      </CCol>
-                    )}
-                    {!loadRight && !loadLeft && (
-                      <CCol sm={6}>
-                        <CRow>
-                          <CBadge className="mb-1" color="success">
-                            Total Active {tbsRight.active + tbsLeft.active}
-                          </CBadge>
-                        </CRow>
-                      </CCol>
-                    )}
-                    {!loadRight && !loadLeft && (
-                      <CCol sm={6}>
-                        <CRow>
-                          <CBadge className="mb-1" color="success">
-                            Total Pairs {pairs}
-                          </CBadge>
-                        </CRow>
-                      </CCol>
-                    )}
                     <div className="">
                       <h5>Rewards Time Line</h5>
                       <ul className="timeline">
