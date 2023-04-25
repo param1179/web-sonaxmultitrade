@@ -38,7 +38,7 @@ function Wallet() {
               progress={{ value: 0 }}
               text="Widget helper text"
               title="Wallet Balance"
-              value={`Rs. ${profile.wallet}`}
+              value={`Rs. ${resp.wallet}`}
             />
             <CWidgetStatsC
               className="mb-3"
@@ -48,7 +48,7 @@ function Wallet() {
               progress={{ value: 0 }}
               text="Widget helper text"
               title="Total Points"
-              value={profile.points}
+              value={resp.points}
             />
           </CCol>
           <CCol md={8}>
