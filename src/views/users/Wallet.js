@@ -19,9 +19,11 @@ import { usersApi } from 'src/APIs'
 import { dateHelper } from 'src/helpers'
 import CIcon from '@coreui/icons-react'
 import { cil3d, cilChartPie, cilWallet } from '@coreui/icons'
+import { getProfileData } from 'src/helpers/tokenLS'
 
 function Wallet() {
   const [wallet] = useState(false)
+  const profile = getProfileData()
   const { isLoading, data: resp } = usersApi.useIntallments()
   return (
     <CRow>
@@ -36,7 +38,7 @@ function Wallet() {
               progress={{ value: 0 }}
               text="Widget helper text"
               title="Wallet Balance"
-              value="Rs. 0"
+              value={`Rs. ${profile.wallet}`}
             />
             <CWidgetStatsC
               className="mb-3"
@@ -45,8 +47,8 @@ function Wallet() {
               inverse
               progress={{ value: 0 }}
               text="Widget helper text"
-              title="Points"
-              value="0"
+              title="Total Points"
+              value={profile.points}
             />
           </CCol>
           <CCol md={8}>
