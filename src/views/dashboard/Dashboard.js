@@ -8,7 +8,8 @@ const Dashboard = () => {
   const { isLoading, data: resp } = usersApi.useProfile()
 
   const pos = resp?.data?.sponserBY?.childs?.filter((res) => res.childId._id === resp?.data?._id)
-
+  var sponserBy = resp?.data?.sponserBY[0]
+  var sponser = sponserBy?.childs[0]?.sponserBy
   return (
     <>
       <CRow>
@@ -106,35 +107,31 @@ const Dashboard = () => {
                   <strong>Sponser By</strong>
                 </CCardHeader>
                 <CCardBody>
-                  {resp?.data.sponserBY && (
+                  {sponser && (
                     <>
                       <CRow>
                         <CCol>Full Name:</CCol>
-                        <CCol>
-                          {resp?.data.sponserBY?.parentId.firstName +
-                            ' ' +
-                            resp?.data.sponserBY?.parentId.lastName}
-                        </CCol>
+                        <CCol>{sponser.firstName + ' ' + sponser.lastName}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>UID:</CCol>
-                        <CCol>{resp?.data.sponserBY?.parentId.uId}</CCol>
+                        <CCol>{sponser.uId}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>Email:</CCol>
-                        <CCol>{resp?.data.sponserBY?.parentId.email}</CCol>
+                        <CCol>{sponser?.email}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>Mobile Number:</CCol>
-                        <CCol>{resp?.data.sponserBY?.parentId.mobile}</CCol>
+                        <CCol>{sponser?.mobile}</CCol>
                       </CRow>
                       <hr />
                       <CRow>
                         <CCol>Position in Team:</CCol>
-                        <CCol>{pos[0].placement}</CCol>
+                        <CCol>{sponserBy?.childs[0]?.placement}</CCol>
                       </CRow>
                     </>
                   )}

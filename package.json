@@ -38,6 +38,7 @@
     "react-organizational-chart": "^2.2.0",
     "react-query": "^3.39.2",
     "react-redux": "^8.0.4",
+    "react-responsive-pagination": "^2.2.0",
     "react-router-dom": "^6.3.0",
     "redux": "4.2.0",
     "simplebar-react": "^2.4.1",

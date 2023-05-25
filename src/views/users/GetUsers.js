@@ -52,6 +52,7 @@ function GetUsers() {
   }, [reload])
   const userId = state && state?.userId ? state?.userId : user._id
   const { data } = usersApi.useGetTeams(userId)
+  const { data: directCount } = usersApi.useGetDirectTeams()
   const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
   var childs = data?.data?.childs
   if (data?.data?.childs[0].placement === 'Right') {
@@ -68,6 +69,9 @@ function GetUsers() {
           <CCard className="mb-4">
             <CCardHeader>
               <strong>All Team&apos;s Tree</strong>
+              <CButton color="primary mx-2" className="float-end">
+                Direct: {directCount?.direct}
+              </CButton>
               <CButton
                 color="primary mx-2"
                 onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}

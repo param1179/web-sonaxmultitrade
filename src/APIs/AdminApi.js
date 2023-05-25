@@ -9,6 +9,8 @@ import { TokenLS } from '../helpers'
 const fetchProfile = async () => await axios.get('users/profile')
 const fetchTeams = async (pId) => await axios.get(`users/teams/${pId}`)
 const fetchUpdateUser = async (id) => await axios.get(`admin/user/${id}`)
+const fetchUpdateSponserUser = async ({ sid, uid }) =>
+  await axios.get(`admin/sponser/${sid}/${uid}`)
 const fetchEditUser = async ({ id, body }) => await axios.put(`admin/user/${id}`, body)
 const fetchUpdatePayment = async (id) => await axios.get(`admin/payment/${id}`)
 const fetchInstallments = async (id) => await axios.get(`admin/installments/${id}`)
@@ -222,6 +224,10 @@ export const useDeleteUser = () => {
 
 export const useUpdateUser = () => {
   return useMutation(fetchUpdateUser)
+}
+
+export const useUpdateSponserUser = () => {
+  return useMutation(fetchUpdateSponserUser)
 }
 
 export const useEditUser = () => {
