@@ -43,6 +43,8 @@ export const fetchUsers = async (limit, page, search) =>
 
 export const fetchAllUsers = async () => await axios.get(`admin/users/list`)
 export const fetchRewards = async () => await axios.get(`admin/rewards`)
+const fetchChangePassword = async ({ body, id }) =>
+  await axios.post(`admin/changePassword/${id}`, body)
 
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
 const fetchUser = async (id) => await axios.get(`admin/info/${id}`)
@@ -123,6 +125,16 @@ export const useCreateAdminRewards = (setErrors) => {
     onError: (error) => {
       if (error?.status === 400) {
         setErrors({ email: error.message })
+      }
+    },
+  })
+}
+
+export const useChangePasswordByAdmin = (setErrors) => {
+  return useMutation(fetchChangePassword, {
+    onError: (error) => {
+      if (error?.status === 400) {
+        setErrors({ password: error.message })
       }
     },
   })

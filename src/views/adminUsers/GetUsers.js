@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { adminApi } from 'src/APIs'
-import Pagination from 'react-js-pagination'
 import {
   CBadge,
   CCard,

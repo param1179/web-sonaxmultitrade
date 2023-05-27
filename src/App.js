@@ -3,6 +3,8 @@ import { QueryClientProvider } from 'react-query'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { queryClient } from './axios'
 import './scss/style.scss'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { ReactQueryDevtoolsPanel } from 'react-query/devtools'
 
 const loading = (
@@ -27,6 +29,7 @@ class App extends Component {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <Suspense fallback={loading}>
+            <ToastContainer />
             <Routes>
               <Route exact path="/" name="Landing Page" element={<LandingPage />} />
               <Route exact path="/login" name="Login Page" element={<Login />} />

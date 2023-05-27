@@ -120,3 +120,11 @@ export const userSignIn = yup.object().shape({
   uId: yup.string().required('UID is require field!'),
   password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),
 })
+
+export const changePasswordByAdmin = yup.object().shape({
+  password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),
+  cpassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match!')
+    .required('Passwords must match!'),
+})

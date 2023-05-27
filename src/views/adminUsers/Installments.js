@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {
   CBadge,
+  CButton,
   CCard,
   CCardBody,
   CCardHeader,
   CCol,
   CContainer,
+  CForm,
+  CFormInput,
   CRow,
   CTable,
   CTableBody,
@@ -19,6 +22,9 @@ import { useLocation } from 'react-router-dom'
 import { dateHelper } from 'src/helpers'
 import { confirmAlert } from 'react-confirm-alert'
 import axios from 'src/axios'
+import { useFormik } from 'formik'
+import { authSchema } from 'src/validators'
+import { toast } from 'react-toastify'
 
 function Installments() {
   const { state } = useLocation()
@@ -48,6 +54,35 @@ function Installments() {
   useEffect(() => {
     getPairs()
   }, [rightActive])
+
+  const {
+    values,
+    handleChange,
+    submitForm,
+    errors,
+    isValid,
+    dirty,
+    resetForm,
+    touched,
+    handleBlur,
+  } = useFormik({
+    initialValues: {
+      password: '',
+      cpassword: '',
+    },
+    validationSchema: authSchema.changePasswordByAdmin,
+    onSubmit: (values) => onCreate(values),
+  })
+
+  const mutateCreate = adminApi.useChangePasswordByAdmin()
+
+  const onCreate = async (body) => {
+    const resp = await mutateCreate.mutateAsync({ body, id })
+    if (resp?.status === 200) {
+      toast.success("User's password changed")
+      resetForm()
+    }
+  }
 
   const getPairs = () => {
     const lessSide = rightActive <= leftActive ? rightActive : leftActive
@@ -126,6 +161,59 @@ function Installments() {
                     </div>
                   </CRow>
                 </CContainer>
+              </CCardBody>
+            </CCard>
+            <CCard className="mb-2">
+              <CCardHeader>Change Password</CCardHeader>
+              <CCardBody>
+                <CForm>
+                  <CRow>
+                    <CCol md={12}>
+                      <div className="mb-3">
+                        <CFormInput
+                          type="text"
+                          id="passwordControlInput"
+                          placeholder="New Password"
+                          value={values.password}
+                          name="password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={errors.password}
+                        />
+                        {touched.password && errors && (
+                          <p className="text-danger">{errors.password}</p>
+                        )}
+                      </div>
+                    </CCol>
+                    <CCol md={12}>
+                      <div className="mb-3">
+                        <CFormInput
+                          id="cpasswordControlInput"
+                          placeholder="Confirm Password"
+                          value={values.cpassword}
+                          name="cpassword"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={errors.cpassword}
+                        />
+                        {touched.cpassword && errors && (
+                          <p className="text-danger">{errors.cpassword}</p>
+                        )}
+                      </div>
+                    </CCol>
+                    <CCol md={12}>
+                      <div className="d-grid gap-2 mb-3">
+                        <CButton
+                          color="primary"
+                          onClick={submitForm}
+                          disabled={!(isValid && dirty) || mutateCreate.isLoading}
+                        >
+                          Save
+                        </CButton>
+                      </div>
+                    </CCol>
+                  </CRow>
+                </CForm>
               </CCardBody>
             </CCard>
           </CCol>
