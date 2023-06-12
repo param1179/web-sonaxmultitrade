@@ -54,16 +54,15 @@ function GetUsers() {
     navigate(location.pathname, {})
   }, [reload])
 
-  const userId = state && state?.userId ? state?.userId : user._id
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`users/teamList/${userId}?position=Left`)
+        .get(`users/teamList/${user._id}?position=Left`)
         .then((response) => {
           setLeftActive(response?.active)
         })
         .then(
-          async (casesHeaderFields) => await axios.get(`users/teamList/${userId}?position=Right`),
+          async (casesHeaderFields) => await axios.get(`users/teamList/${user._id}?position=Right`),
         )
         .then((response) => {
           setRightActive(response?.active)
@@ -72,6 +71,7 @@ function GetUsers() {
     fetchData()
   }, [])
 
+  const userId = state && state?.userId ? state?.userId : user._id
   const { data } = usersApi.useGetTeams(userId)
   const { data: directCount } = usersApi.useGetDirectTeams()
   const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
