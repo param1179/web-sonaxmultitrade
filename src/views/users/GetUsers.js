@@ -48,24 +48,24 @@ function GetUsers() {
     visible: false,
     position: 'Left',
   })
-  const [leftActive, setLeftActive] = useState(0)
-  const [rightActive, setRightActive] = useState(0)
-  useEffect(() => {
-    async function fetchData() {
-      await axios
-        .get(`users/teamList/${user._id}?position=Left`)
-        .then((response) => {
-          setLeftActive(response?.active)
-        })
-        .then(
-          async (casesHeaderFields) => await axios.get(`users/teamList/${user._id}?position=Right`),
-        )
-        .then((response) => {
-          setRightActive(response?.active)
-        })
-    }
-    fetchData()
-  }, [])
+  // const [leftActive, setLeftActive] = useState(0)
+  // const [rightActive, setRightActive] = useState(0)
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     await axios
+  //       .get(`users/teamList/${user._id}?position=Left`)
+  //       .then((response) => {
+  //         setLeftActive(response?.active)
+  //       })
+  //       .then(
+  //         async (casesHeaderFields) => await axios.get(`users/teamList/${user._id}?position=Right`),
+  //       )
+  //       .then((response) => {
+  //         setRightActive(response?.active)
+  //       })
+  //   }
+  //   fetchData()
+  // }, [])
 
   useEffect(() => {
     navigate(location.pathname, {})
@@ -123,21 +123,21 @@ function GetUsers() {
                 lineBorderRadius={'10px'}
                 label={
                   <StyledNode>
-                    <>
+                    {/* <>
                       {!state && !state?.userId && (
                         <>
                           <b>L</b> {leftActive}
                         </>
                       )}
-                    </>
+                    </> */}
                     <CImage src={brand} height={50} alt="Logo" />
-                    <>
+                    {/* <>
                       {!state && !state?.userId && (
                         <>
                           <b>R</b> {rightActive}
                         </>
                       )}
-                    </>
+                    </> */}
                     <div
                       className={`border border-success tree-content ${
                         !state
