@@ -51,10 +51,6 @@ function GetUsers() {
   const [leftActive, setLeftActive] = useState(0)
   const [rightActive, setRightActive] = useState(0)
   useEffect(() => {
-    navigate(location.pathname, {})
-  }, [reload])
-
-  useEffect(() => {
     async function fetchData() {
       await axios
         .get(`users/teamList/${user._id}?position=Left`)
@@ -70,6 +66,10 @@ function GetUsers() {
     }
     fetchData()
   }, [])
+
+  useEffect(() => {
+    navigate(location.pathname, {})
+  }, [reload])
 
   const userId = state && state?.userId ? state?.userId : user._id
   const { data } = usersApi.useGetTeams(userId)
