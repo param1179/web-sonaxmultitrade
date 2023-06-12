@@ -30,6 +30,7 @@ import CIcon from '@coreui/icons-react'
 import { cilArrowTop } from '@coreui/icons'
 import LeftRightTeam from './LeftRightTeam'
 import FamilyList from 'src/components/FamilyList'
+import axios from 'src/axios'
 
 const StyledNode = styled.div`
   padding: 5px;
@@ -47,9 +48,29 @@ function GetUsers() {
     visible: false,
     position: 'Left',
   })
+  const [leftActive, setLeftActive] = useState(0)
+  const [rightActive, setRightActive] = useState(0)
   useEffect(() => {
     navigate(location.pathname, {})
   }, [reload])
+
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get(`users/teamList/${user._id}?position=Left`)
+        .then((response) => {
+          setLeftActive(response?.active)
+        })
+        .then(
+          async (casesHeaderFields) => await axios.get(`users/teamList/${user._id}?position=Right`),
+        )
+        .then((response) => {
+          setRightActive(response?.active)
+        })
+    }
+    fetchData()
+  }, [])
+
   const userId = state && state?.userId ? state?.userId : user._id
   const { data } = usersApi.useGetTeams(userId)
   const { data: directCount } = usersApi.useGetDirectTeams()
@@ -72,7 +93,7 @@ function GetUsers() {
               <CButton color="primary mx-2" className="float-end">
                 Direct: {directCount?.direct}
               </CButton>
-              <CButton
+              {/* <CButton
                 color="primary mx-2"
                 onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}
                 className="float-end"
@@ -85,7 +106,7 @@ function GetUsers() {
                 className="float-end"
               >
                 Left
-              </CButton>
+              </CButton> */}
             </CCardHeader>
             <CCardBody className="divScroll">
               {state && state?.userId && (
@@ -94,6 +115,20 @@ function GetUsers() {
                   <CIcon icon={cilArrowTop} />
                 </CButton>
               )}
+              <CButton
+                color="primary mx-2"
+                onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}
+                className="float-end"
+              >
+                Right {rightActive}
+              </CButton>
+              <CButton
+                color="primary mx-2"
+                onClick={() => setVisible({ visible: !visible.visible, position: 'Left' })}
+                className=""
+              >
+                Left {leftActive}
+              </CButton>
               <Tree
                 lineWidth={'2px'}
                 lineColor={'green'}
