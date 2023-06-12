@@ -54,15 +54,16 @@ function GetUsers() {
     navigate(location.pathname, {})
   }, [reload])
 
+  const userId = state && state?.userId ? state?.userId : user._id
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`users/teamList/${user._id}?position=Left`)
+        .get(`users/teamList/${userId}?position=Left`)
         .then((response) => {
           setLeftActive(response?.active)
         })
         .then(
-          async (casesHeaderFields) => await axios.get(`users/teamList/${user._id}?position=Right`),
+          async (casesHeaderFields) => await axios.get(`users/teamList/${userId}?position=Right`),
         )
         .then((response) => {
           setRightActive(response?.active)
@@ -71,7 +72,6 @@ function GetUsers() {
     fetchData()
   }, [])
 
-  const userId = state && state?.userId ? state?.userId : user._id
   const { data } = usersApi.useGetTeams(userId)
   const { data: directCount } = usersApi.useGetDirectTeams()
   const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
@@ -90,23 +90,25 @@ function GetUsers() {
           <CCard className="mb-4">
             <CCardHeader>
               <strong>All Team&apos;s Tree</strong>
-              <CButton color="primary mx-2" className="float-end">
-                Direct: {directCount?.direct}
-              </CButton>
-              {/* <CButton
-                color="primary mx-2"
-                onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}
-                className="float-end"
-              >
-                Right
-              </CButton>
-              <CButton
-                color="primary mx-2"
-                onClick={() => setVisible({ visible: !visible.visible, position: 'Left' })}
-                className="float-end"
-              >
-                Left
-              </CButton> */}
+              <div>
+                <CButton color="primary mx-2" className="float-end">
+                  Direct: {directCount?.direct}
+                </CButton>
+                <CButton
+                  color="primary mx-2"
+                  onClick={() => setVisible({ visible: !visible.visible, position: 'Left' })}
+                  className=""
+                >
+                  Left
+                </CButton>
+                <CButton
+                  color="primary mx-2"
+                  onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}
+                  className=""
+                >
+                  Right
+                </CButton>
+              </div>
             </CCardHeader>
             <CCardBody className="divScroll">
               {state && state?.userId && (
@@ -115,27 +117,27 @@ function GetUsers() {
                   <CIcon icon={cilArrowTop} />
                 </CButton>
               )}
-              <CButton
-                color="primary mx-2"
-                onClick={() => setVisible({ visible: !visible.visible, position: 'Right' })}
-                className="float-end"
-              >
-                Right {rightActive}
-              </CButton>
-              <CButton
-                color="primary mx-2"
-                onClick={() => setVisible({ visible: !visible.visible, position: 'Left' })}
-                className=""
-              >
-                Left {leftActive}
-              </CButton>
               <Tree
                 lineWidth={'2px'}
                 lineColor={'green'}
                 lineBorderRadius={'10px'}
                 label={
                   <StyledNode>
+                    <>
+                      {!state && !state?.userId && (
+                        <>
+                          <b>L</b> {leftActive}
+                        </>
+                      )}
+                    </>
                     <CImage src={brand} height={50} alt="Logo" />
+                    <>
+                      {!state && !state?.userId && (
+                        <>
+                          <b>R</b> {rightActive}
+                        </>
+                      )}
+                    </>
                     <div
                       className={`border border-success tree-content ${
                         !state
