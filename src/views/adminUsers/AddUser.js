@@ -238,7 +238,7 @@ const AddUser = () => {
                             {errors && <p className="text-danger">{errors.mobile}</p>}
                           </div>
                         </CCol>
-                        <CCol md={6}>
+                        {/* <CCol md={6}>
                           <div className="mb-3">
                             <CFormLabel htmlFor="emailControlInput">Email Id</CFormLabel>
                             <CFormInput
@@ -252,7 +252,7 @@ const AddUser = () => {
                             />
                             {errors && <p className="text-danger">{errors.email}</p>}
                           </div>
-                        </CCol>
+                        </CCol> */}
                       </CRow>
                       <CRow>
                         <CHeader style={vars} className="mb-3">

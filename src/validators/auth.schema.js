@@ -69,10 +69,6 @@ export const createUser = yup.object().shape({
     .required('Mobile is require field!')
     .min(10, 'Phone number too short')
     .max(10, 'Phone number too long'),
-  email: yup
-    .string()
-    .matches(HELP.EMAIL_REGEXP, 'Email is not correct!')
-    .required('Email is require field!'),
   password: yup.string().max(15, 'Max 15 symbol!').required('Password is require field!'),
   cpassword: yup
     .string()
