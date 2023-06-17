@@ -25,6 +25,7 @@ import axios from 'src/axios'
 import { useFormik } from 'formik'
 import { authSchema } from 'src/validators'
 import { toast } from 'react-toastify'
+import UsersWallet from './UsersWallet'
 
 function Installments() {
   const { state } = useLocation()
@@ -268,6 +269,7 @@ function Installments() {
                 </CRow>
               </CCardBody>
             </CCard>
+            <UsersWallet userId={id} />
           </CCol>
         </CRow>
       </CCol>

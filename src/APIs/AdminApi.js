@@ -14,6 +14,7 @@ const fetchUpdateSponserUser = async ({ sid, uid }) =>
 const fetchEditUser = async ({ id, body }) => await axios.put(`admin/user/${id}`, body)
 const fetchUpdatePayment = async (id) => await axios.get(`admin/payment/${id}`)
 const fetchInstallments = async (id) => await axios.get(`admin/installments/${id}`)
+const fetchWallet = async (id) => await axios.get(`admin/wallet/${id}`)
 
 const fetchAdmins = async () => await axios.get('admin/gets')
 
@@ -60,6 +61,12 @@ export const useProfile = () => {
 
 export const useIntallments = (id) => {
   return useQuery(`admin/installments/${id}`, () => fetchInstallments(id), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useWallet = (id) => {
+  return useQuery(`admin/wallet/${id}`, () => fetchWallet(id), {
     refetchOnWindowFocus: false,
   })
 }
