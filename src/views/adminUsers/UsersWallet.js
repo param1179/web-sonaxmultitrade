@@ -84,9 +84,9 @@ export default function UsersWallet({ userId }) {
                               <CTableRow v-for="item in tableItems" key={index}>
                                 <CTableDataCell>{index + 1}</CTableDataCell>
                                 <CTableDataCell>
-                                  <div>{index === 0 ? 'Downpayment' : 'Payment'}</div>
+                                  <div>Rs. {item.payment}</div>
                                   <div className="small text-medium-emphasis">
-                                    <span>Rs. {item.payment}</span>{' '}
+                                    <span></span>{' '}
                                     {`Paid on: ${dateHelper.formatRegister(item.createdAt)} `}
                                   </div>
                                 </CTableDataCell>
