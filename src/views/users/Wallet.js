@@ -58,7 +58,7 @@ function Wallet() {
               </CCardHeader>
               <CCardBody>
                 <CRow className="table-row">
-                  {wallet ? (
+                  {!isLoading && resp?.walletHistory.length !== 0 ? (
                     <CTable
                       align="middle"
                       bordered
@@ -70,30 +70,27 @@ function Wallet() {
                       <CTableHead color="light">
                         <CTableRow>
                           <CTableHeaderCell>S. No.</CTableHeaderCell>
-                          <CTableHeaderCell>Installments Date & Payment Type</CTableHeaderCell>
-                          <CTableHeaderCell>Amount</CTableHeaderCell>
-                          <CTableHeaderCell>Status</CTableHeaderCell>
+                          <CTableHeaderCell>Payment</CTableHeaderCell>
+                          <CTableHeaderCell>Payment By</CTableHeaderCell>
+                          <CTableHeaderCell>Level By</CTableHeaderCell>
                         </CTableRow>
                       </CTableHead>
                       <CTableBody>
-                        {resp?.data.map((item, index) => (
+                        {resp?.walletHistory.map((item, index) => (
                           <CTableRow v-for="item in tableItems" key={index}>
                             <CTableDataCell>{index + 1}</CTableDataCell>
                             <CTableDataCell>
-                              <div>{index === 0 ? 'Downpayment' : 'Payment'}</div>
+                              <div>Rs. {item.payment}</div>
                               <div className="small text-medium-emphasis">
-                                <span>{!item.status && ' Unpaid |'}</span>{' '}
-                                {item.status &&
-                                  `Paid on: ${dateHelper.formatRegister(item.updatedAt)} `}
+                                <span></span>{' '}
+                                {`Received on: ${dateHelper.formatRegister(item.createdAt)} `}
                               </div>
                             </CTableDataCell>
 
-                            <CTableDataCell>Rs. {item.price}</CTableDataCell>
+                            <CTableDataCell>{`${item.paymentBy?.firstName}(${item.paymentBy?.uId})`}</CTableDataCell>
                             <CTableDataCell>
                               <h5>
-                                <CBadge color={item.status ? 'success' : 'danger'}>
-                                  {item.status ? 'Paid' : 'Due'}
-                                </CBadge>
+                                <CBadge color={'success'}>{item.levelBy}</CBadge>
                               </h5>
                             </CTableDataCell>
                           </CTableRow>

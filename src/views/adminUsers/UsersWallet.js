@@ -62,7 +62,7 @@ export default function UsersWallet({ userId }) {
                   </CCardHeader>
                   <CCardBody>
                     <CRow className="table-row">
-                      {!isLoading ? (
+                      {!isLoading && resp?.walletHistory.length !== 0 ? (
                         <CTable
                           align="middle"
                           bordered
@@ -87,7 +87,7 @@ export default function UsersWallet({ userId }) {
                                   <div>Rs. {item.payment}</div>
                                   <div className="small text-medium-emphasis">
                                     <span></span>{' '}
-                                    {`Paid on: ${dateHelper.formatRegister(item.createdAt)} `}
+                                    {`Received on: ${dateHelper.formatRegister(item.createdAt)} `}
                                   </div>
                                 </CTableDataCell>
 
