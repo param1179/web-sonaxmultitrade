@@ -25,6 +25,8 @@ const fetchDeleteCoupon = async (id) => await axios.delete(`admin/coupon/${id}`)
 const fetchCreateAdmin = async (body) => await axios.post('admin/create', body)
 const fetchCreateUser = async (body) => await axios.post('users/add', body)
 const fetchRegisterUser = async (body) => await axios.post('users/register', body)
+const fetchPaymentRequest = async (body) => await axios.post('users/request', body)
+
 const fetchCreateSchool = async (body) => await axios.post('admin/schools', body)
 const fetchCreateCoupon = async (body) => await axios.post('admin/coupon', body)
 const fetchChangePassword = async (body) => await axios.post('users/changePassword', body)
@@ -119,6 +121,16 @@ export const useRegisterUser = (setErrors) => {
     onError: (error) => {
       if (error?.status === 400) {
         setErrors({ email: error.message })
+      }
+    },
+  })
+}
+
+export const usePaymentRequest = (setErrors) => {
+  return useMutation(fetchPaymentRequest, {
+    onError: (error) => {
+      if (error?.status === 400) {
+        setErrors({ paymentRequest: error.message })
       }
     },
   })

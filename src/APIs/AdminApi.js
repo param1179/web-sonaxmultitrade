@@ -13,8 +13,10 @@ const fetchUpdateSponserUser = async ({ sid, uid }) =>
   await axios.get(`admin/sponser/${sid}/${uid}`)
 const fetchEditUser = async ({ id, body }) => await axios.put(`admin/user/${id}`, body)
 const fetchUpdatePayment = async (id) => await axios.get(`admin/payment/${id}`)
+const fetchUpdatePaymentRequest = async (id) => await axios.put(`admin/updateRequest/${id}`)
 const fetchInstallments = async (id) => await axios.get(`admin/installments/${id}`)
 const fetchWallet = async (id) => await axios.get(`admin/wallet/${id}`)
+const fetchPaymentRequests = async () => await axios.get(`admin/requests`)
 
 const fetchAdmins = async () => await axios.get('admin/gets')
 
@@ -67,6 +69,12 @@ export const useIntallments = (id) => {
 
 export const useWallet = (id) => {
   return useQuery(`admin/wallet/${id}`, () => fetchWallet(id), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const usePaymentRequests = () => {
+  return useQuery(`admin/requests`, () => fetchPaymentRequests(), {
     refetchOnWindowFocus: false,
   })
 }
@@ -255,4 +263,8 @@ export const useEditUser = () => {
 
 export const useUpdatePayment = () => {
   return useMutation(fetchUpdatePayment)
+}
+
+export const useUpdatePaymentRequest = () => {
+  return useMutation(fetchUpdatePaymentRequest)
 }

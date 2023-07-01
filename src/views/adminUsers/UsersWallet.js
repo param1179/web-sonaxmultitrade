@@ -77,26 +77,48 @@ export default function UsersWallet({ userId }) {
                               <CTableHeaderCell>Payment</CTableHeaderCell>
                               <CTableHeaderCell>Payment By</CTableHeaderCell>
                               <CTableHeaderCell>Level By</CTableHeaderCell>
+                              <CTableHeaderCell>Payment Type</CTableHeaderCell>
                             </CTableRow>
                           </CTableHead>
                           <CTableBody>
                             {resp?.walletHistory.map((item, index) => (
                               <CTableRow v-for="item in tableItems" key={index}>
                                 <CTableDataCell>{index + 1}</CTableDataCell>
-                                <CTableDataCell>
+                                <CTableDataCell
+                                  className={
+                                    item.transactionType !== 'withdrawal'
+                                      ? 'bg-success'
+                                      : 'bg-danger'
+                                  }
+                                >
                                   <div>Rs. {item.payment}</div>
                                   <div className="small text-medium-emphasis">
                                     <span></span>{' '}
-                                    {`Received on: ${dateHelper.formatRegister(item.createdAt)} `}
+                                    {`${
+                                      item.transactionType !== 'withdrawal'
+                                        ? 'Received on:'
+                                        : 'Withdrawal'
+                                    } ${dateHelper.formatRegister(item.createdAt)} `}
                                   </div>
                                 </CTableDataCell>
 
-                                <CTableDataCell>{`${item.paymentBy?.firstName}(${item.paymentBy?.uId})`}</CTableDataCell>
+                                <CTableDataCell>
+                                  {item.paymentBy
+                                    ? `${item.paymentBy?.firstName}(${item.paymentBy?.uId})`
+                                    : 'Admin'}
+                                </CTableDataCell>
                                 <CTableDataCell>
                                   <h5>
                                     <CBadge color={'success'}>{item.levelBy}</CBadge>
                                   </h5>
                                 </CTableDataCell>
+                                <CTableDataCell>{`${
+                                  item.paymentType !== 'regularEmi'
+                                    ? item.paymentType !== 'withdrawal'
+                                      ? 'Joining'
+                                      : 'Withdrawal'
+                                    : 'Regular Emi'
+                                }`}</CTableDataCell>
                               </CTableRow>
                             ))}
                           </CTableBody>

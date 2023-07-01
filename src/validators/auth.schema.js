@@ -53,7 +53,9 @@ export const changePassword = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Passwords must match!')
     .required('Passwords must match!'),
 })
-
+export const createPaymentRequest = yup.object().shape({
+  paymentRequest: yup.number().required('Payment request require field!'),
+})
 export const createUser = yup.object().shape({
   firstName: yup.string().required('First name is require field!'),
   lastName: yup.string().required('Last name is require field!'),
