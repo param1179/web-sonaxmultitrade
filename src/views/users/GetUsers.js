@@ -21,6 +21,7 @@ import {
   CRow,
   CTable,
   CTableBody,
+  CTableDataCell,
   CTableHead,
   CTableHeaderCell,
   CTableRow,
@@ -31,6 +32,7 @@ import { cilArrowTop } from '@coreui/icons'
 import LeftRightTeam from './LeftRightTeam'
 import FamilyList from 'src/components/FamilyList'
 import axios from 'src/axios'
+import { dateHelper } from 'src/helpers'
 
 const StyledNode = styled.div`
   padding: 5px;
@@ -48,6 +50,11 @@ function GetUsers() {
     visible: false,
     position: 'Left',
   })
+  const [visible2, setVisible2] = useState({
+    visible: false,
+    position: 'Direct',
+  })
+
   // const [leftActive, setLeftActive] = useState(0)
   // const [rightActive, setRightActive] = useState(0)
   // useEffect(() => {
@@ -73,7 +80,7 @@ function GetUsers() {
 
   const userId = state && state?.userId ? state?.userId : user._id
   const { data } = usersApi.useGetTeams(userId)
-  const { data: directCount } = usersApi.useGetDirectTeams()
+  const { isLoading: loa, data: directCount } = usersApi.useGetDirectTeams()
   const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
   var childs = data?.data?.childs
   if (data?.data?.childs[0].placement === 'Right') {
@@ -91,8 +98,12 @@ function GetUsers() {
             <CCardHeader>
               <strong>All Team&apos;s Tree</strong>
               <div>
-                <CButton color="primary mx-2" className="float-end">
-                  Direct: {directCount?.direct}
+                <CButton
+                  color="primary mx-2"
+                  className="float-end"
+                  onClick={() => setVisible2({ visible: !visible2.visible, position: 'Direct' })}
+                >
+                  Direct: {directCount?.direct.length}
                 </CButton>
                 <CButton
                   color="primary mx-2"
@@ -219,6 +230,62 @@ function GetUsers() {
                     pId={data?.data.parentId}
                   />
                 )}
+              </CTableBody>
+            </CTable>
+          </CRow>
+        </CModalBody>
+      </CModal>
+      <CModal
+        fullscreen="lg"
+        visible={visible2.visible}
+        onClose={() => {
+          setVisible({ ...visible2, visible: false })
+        }}
+      >
+        <CModalHeader>
+          <CModalTitle>{visible2.position} Team List</CModalTitle>
+        </CModalHeader>
+        <CModalBody className="overflow-auto">
+          <CRow>
+            <CTable align="middle" bordered className="mb-0 border" hover responsive striped>
+              <CTableHead color="light">
+                <CTableRow>
+                  <CTableHeaderCell>S. No.</CTableHeaderCell>
+                  <CTableHeaderCell>Name</CTableHeaderCell>
+                  <CTableHeaderCell>User Id</CTableHeaderCell>
+                  <CTableHeaderCell>Status</CTableHeaderCell>
+                </CTableRow>
+              </CTableHead>
+              <CTableBody>
+                {!loa &&
+                  directCount?.direct.map((_child, num) => (
+                    <CTableRow v-for="item in tableItems" key={num}>
+                      <CTableDataCell>{'#' + (num + 1)}</CTableDataCell>
+                      <CTableDataCell>
+                        <div>
+                          {_child.childs[0].childId?.firstName +
+                            ' ' +
+                            _child.childs[0].childId?.lastName}
+                        </div>
+                        <div className="small text-medium-emphasis">
+                          <span>{'New |'}</span> Registered on:{' '}
+                          {dateHelper.formatRegister(_child.childs[0].childId?.createdAt)}
+                        </div>
+                      </CTableDataCell>
+
+                      <CTableDataCell>{_child.childs[0].childId?.uId}</CTableDataCell>
+                      <CTableDataCell>
+                        <h5>
+                          <CBadge
+                            id={_child.childs[0].childId?._id}
+                            color={_child.childs[0].childId?.isCompleted ? 'success' : 'danger'}
+                          >
+                            {_child.childs[0].childId?.isCompleted ? 'Active' : 'Inactive'}
+                          </CBadge>
+                        </h5>
+                      </CTableDataCell>
+                    </CTableRow>
+                  ))}
               </CTableBody>
             </CTable>
           </CRow>
