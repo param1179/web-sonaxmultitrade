@@ -1,4 +1,4 @@
-import { cil3d, cilWallet } from '@coreui/icons'
+import { cil3d, cilBank, cilWallet } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import {
   CBadge,
@@ -34,6 +34,16 @@ export default function UsersWallet({ userId }) {
           <CCol md={12}>
             <CRow>
               <CCol md={4}>
+                <CWidgetStatsC
+                  className="mb-3"
+                  icon={<CIcon icon={cilBank} height={36} />}
+                  color="info"
+                  inverse
+                  progress={{ value: 100 }}
+                  text="Widget helper text"
+                  title="Withdrawal Payments"
+                  value={`Rs. ${!isLoading && resp.user?.withdraw}`}
+                />
                 <CWidgetStatsC
                   className="mb-3"
                   icon={<CIcon icon={cilWallet} height={36} />}

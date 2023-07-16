@@ -29,7 +29,7 @@ import {
 import { usersApi } from 'src/APIs'
 import { dateHelper } from 'src/helpers'
 import CIcon from '@coreui/icons-react'
-import { cil3d, cilChartPie, cilWallet } from '@coreui/icons'
+import { cil3d, cilBank, cilChartPie, cilWallet } from '@coreui/icons'
 import { getProfileData } from 'src/helpers/tokenLS'
 import { authSchema } from 'src/validators'
 import { useFormik } from 'formik'
@@ -114,6 +114,16 @@ function Wallet() {
         <CCol md={12}>
           <CRow>
             <CCol md={4}>
+              <CWidgetStatsC
+                className="mb-3"
+                icon={<CIcon icon={cilBank} height={36} />}
+                color="info"
+                inverse
+                progress={{ value: 100 }}
+                text="Widget helper text"
+                title="Withdrawal Payments"
+                value={`Rs. ${!isLoading && resp?.withdraw}`}
+              />
               <CWidgetStatsC
                 className="mb-3"
                 icon={<CIcon icon={cilWallet} height={36} />}
