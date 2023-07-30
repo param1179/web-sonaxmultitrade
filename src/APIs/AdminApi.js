@@ -45,6 +45,7 @@ export const fetchUsers = async (limit, page, search) =>
   await axios.get(`admin/users?page=${page}&limit=${limit}&search=${search}`)
 
 export const fetchAllUsers = async () => await axios.get(`admin/users/list`)
+export const fetchUserProfile = async (id) => await axios.get(`admin/user/profile/${id}`)
 export const fetchRewards = async () => await axios.get(`admin/rewards`)
 const fetchChangePassword = async ({ body, id }) =>
   await axios.post(`admin/changePassword/${id}`, body)
@@ -219,6 +220,12 @@ export const useGetUser = (id) => {
 
 export const useGetAllUsers = () => {
   return useQuery(`admin/users/list`, () => fetchAllUsers(), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetUserProfile = (id) => {
+  return useQuery(`admin/user/profile/${id}`, () => fetchUserProfile(id), {
     refetchOnWindowFocus: false,
   })
 }
