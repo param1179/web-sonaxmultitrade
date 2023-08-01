@@ -7,6 +7,7 @@ import { logout } from '../redux/slices/common'
 import { TokenLS } from '../helpers'
 
 const fetchProfile = async () => await axios.get('users/profile')
+const fetchUpdate = async () => await axios.get('users/get')
 const fetchTeams = async (pId) => await axios.get(`users/teams/${pId}`)
 const fetchDirectTeams = async () => await axios.get(`users/direct`)
 const fetchTeamList = async (position, pId) =>
@@ -30,6 +31,7 @@ const fetchPaymentRequest = async (body) => await axios.post('users/request', bo
 const fetchCreateSchool = async (body) => await axios.post('admin/schools', body)
 const fetchCreateCoupon = async (body) => await axios.post('admin/coupon', body)
 const fetchChangePassword = async (body) => await axios.post('users/changePassword', body)
+const fetchEditUser = async (body) => await axios.put('users/update', body)
 
 export const fetchCoupons = async (page) => await axios.get(`admin/coupons?page=${page}`)
 
@@ -62,6 +64,12 @@ export const useServices = () => {
 
 export const useGetRewards = () => {
   return useQuery(`users/rewards`, () => fetchRewards(), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetProfile = () => {
+  return useQuery(`get`, () => fetchUpdate(), {
     refetchOnWindowFocus: false,
   })
 }
@@ -141,6 +149,16 @@ export const useChangePassword = (setErrors) => {
     onError: (error) => {
       if (error?.status === 400) {
         setErrors({ oldPassword: error.message })
+      }
+    },
+  })
+}
+
+export const useEditUser = (setErrors) => {
+  return useMutation(fetchEditUser, {
+    onError: (error) => {
+      if (error?.status === 400) {
+        // setErrors({ oldPassword: error.message })
       }
     },
   })

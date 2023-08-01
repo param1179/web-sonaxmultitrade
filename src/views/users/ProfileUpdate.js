@@ -16,16 +16,16 @@ import { useFormik } from 'formik'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { adminApi } from 'src/APIs'
+import { usersApi } from 'src/APIs'
 import { authSchema } from 'src/validators'
 
 const vars = {
   '--cui-header-bg': '#E4e4e4',
 }
 
-function UserUpdate() {
-  const { id } = useParams()
-  const { isLoading, data, refetch } = adminApi.useGetUserProfile(id)
+function ProfileUpdate() {
+  const { isLoading, data, refetch } = usersApi.useGetProfile()
+  const [isDissabled, setIsDissabled] = useState(true)
 
   const initialValues = {
     firstName: data?.data.user.firstName,
@@ -64,12 +64,13 @@ function UserUpdate() {
 
   useEffect(() => {
     setValues({ ...initialValues })
+    setIsDissabled(data?.data.user.isCompleted)
   }, [isLoading, data])
 
-  const mutateCreate = adminApi.useEditUser()
+  const mutateCreate = usersApi.useEditUser()
 
   const onCreate = async (body) => {
-    const resp = await mutateCreate.mutateAsync({ id, body })
+    const resp = await mutateCreate.mutateAsync(body)
     if (resp?.status === 200) {
       toast.success('User updated')
       refetch()
@@ -90,12 +91,13 @@ function UserUpdate() {
                     <CCol md={12}>
                       <CRow>
                         <CHeader style={vars} className="mb-3">
-                          <strong>User&apos;s Personal Details</strong>
+                          <strong>Personal Details</strong>
                         </CHeader>
                         <CCol md={6}>
                           <div className="mb-3">
                             <CFormLabel htmlFor="fistNameControlInput">First Name</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="fistNameControlInput"
                               placeholder="First Name"
@@ -111,6 +113,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="lastNameControlInput">Last Name</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="lastNameControlInput"
                               placeholder="Last Name"
@@ -126,6 +129,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="dobFormControlInput">Date Of Birth</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="date"
                               id="dobFormControlInput"
                               value={values.dob || ''}
@@ -142,6 +146,7 @@ function UserUpdate() {
                               Father&apos;s/Spouse&apos;s Name
                             </CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="spouseOrFatherControlInput"
                               placeholder="Father's/Spouse Name"
@@ -156,12 +161,13 @@ function UserUpdate() {
                       </CRow>
                       <CRow>
                         <CHeader style={vars} className="mb-3">
-                          <strong>User&apos;s Contact Details</strong>
+                          <strong>Contact Details</strong>
                         </CHeader>
                         <CCol md={6}>
                           <div className="mb-3">
                             <CFormLabel htmlFor="mobileControlInput">Mobile Number</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="mobileControlInput"
                               placeholder="Mobile Number"
@@ -191,7 +197,7 @@ function UserUpdate() {
                       </CRow>
                       <CRow>
                         <CHeader style={vars} className="mb-3">
-                          <strong>User&apos;s Address Details</strong>
+                          <strong>Address Details</strong>
                         </CHeader>
                         <CCol md={6}>
                           <div className="mb-3">
@@ -199,6 +205,7 @@ function UserUpdate() {
                               House Number/Vilaage/Post Office
                             </CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="localityControlInput"
                               placeholder="House Number/Vilaage/Post Office"
@@ -214,6 +221,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="cityControlInput">City</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="cityControlInput"
                               placeholder="Last Name"
@@ -229,6 +237,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="districtControlInput">District</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="districtControlInput"
                               placeholder="District"
@@ -244,6 +253,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="stateControlInput">State</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="stateControlInput"
                               placeholder="State"
@@ -259,6 +269,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="pinControlInput">Area Pin Code</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="pinControlInput"
                               placeholder="Area Pin Code"
@@ -274,6 +285,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="countryControlInput">Country</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="countryControlInput"
                               placeholder="Country"
@@ -296,6 +308,7 @@ function UserUpdate() {
                               First Name
                             </CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="nomineeFirstNameControlInput"
                               placeholder="nomineeFirstName"
@@ -313,6 +326,7 @@ function UserUpdate() {
                               Last Name
                             </CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="nomineeLastNameControlInput"
                               placeholder="nomineeLastName"
@@ -328,6 +342,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="nomineeDobControlInput">Date Of Birth</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="date"
                               id="nomineeDobControlInput"
                               placeholder="nomineeDob"
@@ -343,6 +358,7 @@ function UserUpdate() {
                           <div className="mb-3">
                             <CFormLabel htmlFor="nomineeRelationControlInput">Relation</CFormLabel>
                             <CFormInput
+                              disabled={isDissabled}
                               type="text"
                               id="nomineeRelationControlInput"
                               placeholder="nomineeRelation"
@@ -364,7 +380,7 @@ function UserUpdate() {
                         <CButton
                           color="primary"
                           onClick={submitForm}
-                          disabled={!(isValid && dirty) || mutateCreate.isLoading}
+                          disabled={!(isValid && dirty) || mutateCreate.isLoading || isDissabled}
                         >
                           Update Account
                         </CButton>
@@ -381,4 +397,4 @@ function UserUpdate() {
   )
 }
 
-export default UserUpdate
+export default ProfileUpdate

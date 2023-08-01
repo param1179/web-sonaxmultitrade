@@ -15,6 +15,7 @@ const Wallet = React.lazy(() => import('./views/users/Wallet'))
 
 const Installments = React.lazy(() => import('./views/adminUsers/Installments'))
 const ChangePassword = React.lazy(() => import('./views/users/ChangePassword'))
+const ProfileUpdate = React.lazy(() => import('./views/users/ProfileUpdate'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -34,6 +35,7 @@ const routes = [
   { path: '/wallet', name: 'Wallet', element: Wallet },
   { path: '/:id', name: 'Wallet', element: UserUpdate },
   { path: '/password', name: 'Change Password', element: ChangePassword },
+  { path: '/profile', name: 'Profile', element: ProfileUpdate },
 ]
 
 export default routes
