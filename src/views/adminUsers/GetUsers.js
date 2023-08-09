@@ -171,7 +171,7 @@ function GetUsers() {
                           </h5>
                         </CTableDataCell>
                         <CTableDataCell>
-                          {sponser ? (
+                          {/* {sponser ? (
                             <>
                               <div>
                                 {sponser?.firstName +
@@ -185,27 +185,28 @@ function GetUsers() {
                                 Position: <b>{sponserBy?.childs[0]?.placement}</b>
                               </div>
                             </>
-                          ) : (
-                            <div className="mb-3">
-                              <CFormSelect
-                                className="selectpicker"
-                                aria-label="Default select example"
-                                name="sponserId"
-                                onChange={(e) => directHandler(e.target.value, item._id)}
-                                data-live-search="true"
-                              >
-                                {isLoading && <option value="">Loading..</option>}
+                          ) : ( */}
+                          <div className="mb-3">
+                            <CFormSelect
+                              className="selectpicker"
+                              aria-label="Default select example"
+                              name="sponserId"
+                              onChange={(e) => directHandler(e.target.value, item._id)}
+                              data-live-search="true"
+                            >
+                              {isLoading && <option value="">Loading..</option>}
 
-                                <option value="">Select Sponser</option>
-                                {usersList?.users.map((res, i) => (
-                                  <option
-                                    key={i}
-                                    value={res._id}
-                                  >{`${res.firstName} ${res.lastName} (${res.uId})`}</option>
-                                ))}
-                              </CFormSelect>
-                            </div>
-                          )}
+                              <option value="">Select Sponser</option>
+                              {usersList?.users.map((res, i) => (
+                                <option
+                                  key={i}
+                                  value={res._id}
+                                  selected={res._id === sponser?._id}
+                                >{`${res.firstName} ${res.lastName} (${res.uId})`}</option>
+                              ))}
+                            </CFormSelect>
+                          </div>
+                          {/* )} */}
                         </CTableDataCell>
                         <CTableDataCell className="gap-2">
                           <h5
