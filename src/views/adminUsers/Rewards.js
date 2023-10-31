@@ -19,6 +19,7 @@ import {
 import { adminApi } from 'src/APIs'
 import { useFormik } from 'formik'
 import { authSchema } from 'src/validators'
+import { confirmAlert } from 'react-confirm-alert'
 
 const Rewards = () => {
   const { isLoading, data: rewards, refetch } = adminApi.useGetRewards()
@@ -35,6 +36,7 @@ const Rewards = () => {
   } = useFormik({
     initialValues: {
       rewardLevel: '',
+      rewardPrice: '',
       onPairs: '',
       reward: '',
     },
@@ -43,6 +45,7 @@ const Rewards = () => {
   })
 
   const mutateCreate = adminApi.useCreateAdminRewards()
+  const mutateDelete = adminApi.useDeleteReward()
 
   const onCreate = async (body) => {
     const resp = await mutateCreate.mutateAsync(body)
@@ -51,6 +54,27 @@ const Rewards = () => {
       resetForm()
     }
   }
+
+  const onDelete = async (id) => {
+    confirmAlert({
+      title: 'Delete this reward',
+      message: 'Are you sure to do this?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            const resp = await mutateDelete.mutateAsync(id)
+            if (resp?.status === 200) refetch()
+          },
+        },
+        {
+          label: 'No',
+          // onClick: () => alert("Click No")
+        },
+      ],
+    })
+  }
+
   return (
     <CRow>
       <CCol md={12}>
@@ -109,6 +133,23 @@ const Rewards = () => {
                   </div>
                 </CCol>
                 <CCol md={3}>
+                  <div className="mb-3">
+                    <CFormInput
+                      type="text"
+                      id="rewardPriceControlInput"
+                      placeholder="Reward Price"
+                      value={values.rewardPrice}
+                      name="rewardPrice"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={errors.rewardPrice}
+                    />
+                    {touched.rewardPrice && errors && (
+                      <p className="text-danger">{errors.rewardPrice}</p>
+                    )}
+                  </div>
+                </CCol>
+                <CCol md={3}>
                   <div className="d-grid gap-2 mb-3">
                     <CButton
                       color="primary"
@@ -129,6 +170,8 @@ const Rewards = () => {
                     <CTableHeaderCell>Reward Level</CTableHeaderCell>
                     <CTableHeaderCell>On Pairs</CTableHeaderCell>
                     <CTableHeaderCell>Reward Name</CTableHeaderCell>
+                    <CTableHeaderCell>Reward Price</CTableHeaderCell>
+                    <CTableHeaderCell>Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
@@ -145,6 +188,16 @@ const Rewards = () => {
                           </h5>
                         </CTableDataCell>
                         <CTableDataCell>{item.reward}</CTableDataCell>
+                        <CTableDataCell>
+                          <div>{item.rewardPrice}</div>
+                        </CTableDataCell>
+                        <CTableDataCell>
+                          <h5 onClick={() => onDelete(item._id)}>
+                            <CBadge role="button" color="danger">
+                              Delete
+                            </CBadge>
+                          </h5>
+                        </CTableDataCell>
                       </CTableRow>
                     ))}
                 </CTableBody>

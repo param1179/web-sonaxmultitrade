@@ -99,6 +99,7 @@ export const createSchool = yup.object().shape({
 
 export const createRewards = yup.object().shape({
   rewardLevel: yup.string().required('Reward Level is require field!'),
+  rewardPrice: yup.number().max(999999999).required('Reward Price is require field!'),
   onPairs: yup.number().required('Pairs is require field!'),
   reward: yup.string().required('Reward name is require field!'),
 })
@@ -125,4 +126,10 @@ export const changePasswordByAdmin = yup.object().shape({
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match!')
     .required('Passwords must match!'),
+})
+
+export const addRewardsbyAdmin = yup.object().shape({
+  title: yup.string().max(15, 'Max 15 symbol!').required('Title is require field!'),
+  date: yup.string().required('Date is require field!'),
+  price: yup.number().max(999999999).required('Price is require field!'),
 })

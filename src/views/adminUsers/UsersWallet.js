@@ -23,7 +23,6 @@ import { dateHelper } from 'src/helpers'
 
 export default function UsersWallet({ userId }) {
   const { isLoading, data: resp } = adminApi.useWallet(userId)
-  console.log(resp)
   return (
     <CCard className="mt-2">
       <CCardHeader>

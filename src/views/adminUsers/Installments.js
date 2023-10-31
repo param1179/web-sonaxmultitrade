@@ -26,6 +26,7 @@ import { useFormik } from 'formik'
 import { authSchema } from 'src/validators'
 import { toast } from 'react-toastify'
 import UsersWallet from './UsersWallet'
+import RewardsForm from 'src/components/RewardsForm'
 
 function Installments() {
   const { state } = useLocation()
@@ -117,6 +118,7 @@ function Installments() {
     <CRow>
       <CCol md={12}>
         <CRow>
+          <RewardsForm id={id} />
           <CCol md={4}>
             <CCard className="mb-2">
               <CCardHeader>

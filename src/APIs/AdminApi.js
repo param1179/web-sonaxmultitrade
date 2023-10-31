@@ -15,6 +15,7 @@ const fetchEditUser = async ({ id, body }) => await axios.put(`admin/user/${id}`
 const fetchUpdatePayment = async (id) => await axios.get(`admin/payment/${id}`)
 const fetchUpdatePaymentRequest = async (id) => await axios.put(`admin/updateRequest/${id}`)
 const fetchInstallments = async (id) => await axios.get(`admin/installments/${id}`)
+const fetchUserRewards = async (id) => await axios.get(`admin/userRewards/${id}`)
 const fetchWallet = async (id) => await axios.get(`admin/wallet/${id}`)
 const fetchPaymentRequests = async () => await axios.get(`admin/requests`)
 
@@ -27,6 +28,7 @@ const fetchActivity = async (filterNum) => await axios.get(`admin/activity/${fil
 
 const fetchDeleteAdmin = async (id) => await axios.delete(`admin/delete/${id}`)
 const fetchDeleteCoupon = async (id) => await axios.delete(`admin/coupon/${id}`)
+const fetchDeleteReward = async (id) => await axios.delete(`admin/reward/${id}`)
 
 const fetchCreateAdmin = async (body) => await axios.post('admin/create', body)
 const fetchCreateAdminUser = async (body) => await axios.post('admin/users/add', body)
@@ -50,6 +52,8 @@ export const fetchRewards = async () => await axios.get(`admin/rewards`)
 const fetchChangePassword = async ({ body, id }) =>
   await axios.post(`admin/changePassword/${id}`, body)
 
+const fetchAddReward = async ({ body, id }) => await axios.post(`admin/userRewards/${id}`, body)
+
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
 const fetchUser = async (id) => await axios.get(`admin/info/${id}`)
 const fetchPackages = async () => await axios.get(`admin/packages`)
@@ -64,6 +68,12 @@ export const useProfile = () => {
 
 export const useIntallments = (id) => {
   return useQuery(`admin/installments/${id}`, () => fetchInstallments(id), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useUserRewards = (id) => {
+  return useQuery(`admin/userRewards/${id}`, () => fetchUserRewards(id), {
     refetchOnWindowFocus: false,
   })
 }
@@ -116,6 +126,10 @@ export const useDeleteCoupon = () => {
   return useMutation(fetchDeleteCoupon)
 }
 
+export const useDeleteReward = () => {
+  return useMutation(fetchDeleteReward)
+}
+
 export const useCreateAdmin = (setErrors) => {
   return useMutation(fetchCreateAdmin, {
     onError: (error) => {
@@ -151,6 +165,16 @@ export const useChangePasswordByAdmin = (setErrors) => {
     onError: (error) => {
       if (error?.status === 400) {
         setErrors({ password: error.message })
+      }
+    },
+  })
+}
+
+export const useAddRewardByAdmin = (setErrors) => {
+  return useMutation(fetchAddReward, {
+    onError: (error) => {
+      if (error?.status === 400) {
+        setErrors({ Title: error.message })
       }
     },
   })
