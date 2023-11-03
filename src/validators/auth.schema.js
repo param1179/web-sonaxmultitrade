@@ -89,6 +89,11 @@ export const createCoupone = yup.object().shape({
   endDate: yup.date().min(new Date(), "end date can't be before current date"),
 })
 
+export const searchDataByDates = yup.object().shape({
+  from: yup.date().max(new Date(), "From date can't be after current date"),
+  to: yup.date().max(new Date(), "End date can't be after current date"),
+})
+
 export const createSchool = yup.object().shape({
   email: yup
     .string()

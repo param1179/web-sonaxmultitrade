@@ -18,7 +18,8 @@ const fetchInstallments = async (id) => await axios.get(`admin/installments/${id
 const fetchUserRewards = async (id) => await axios.get(`admin/userRewards/${id}`)
 const fetchWallet = async (id) => await axios.get(`admin/wallet/${id}`)
 const fetchPaymentRequests = async () => await axios.get(`admin/requests`)
-
+export const fetchBusiness = async (dates) =>
+  await axios.get(`admin/business?from=${dates.from}&to=${dates.to}`)
 const fetchAdmins = async () => await axios.get('admin/gets')
 
 const fetchServices = async () => await axios.get('admin/services')
@@ -86,6 +87,12 @@ export const useWallet = (id) => {
 
 export const usePaymentRequests = () => {
   return useQuery(`admin/requests`, () => fetchPaymentRequests(), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useBusiness = (dates) => {
+  return useQuery(`admin/business/${dates.from}/${dates.to}`, () => fetchBusiness(dates), {
     refetchOnWindowFocus: false,
   })
 }
