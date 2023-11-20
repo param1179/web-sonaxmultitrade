@@ -83,6 +83,7 @@ function GetUsers() {
   const { isLoading: loa, data: directCount } = usersApi.useGetDirectTeams()
   const { isLoading: load, data: tbs, refetch } = usersApi.useGetTeamList(visible.position, userId)
   var childs = data?.data?.childs
+  var parentId = data?.data?.parentId
   if (data?.data?.childs[0].placement === 'Right') {
     childs = data?.data?.childs.reverse()
   }
@@ -175,7 +176,7 @@ function GetUsers() {
                         item={child}
                         num={n}
                         StyledNode={StyledNode}
-                        pId={data?.data.parentId}
+                        pId={parentId?._id}
                       />
                     )
                   })}

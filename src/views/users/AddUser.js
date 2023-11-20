@@ -33,7 +33,7 @@ const AddUser = () => {
   const [isSponser, setIsSponsered] = useState(false)
   const user = getProfileData()
   const { isLoading, data: packages } = usersApi.useGetPackages()
-  const { isLoading: load, data: userData } = usersApi.useGetUser(state.pId)
+  const { isLoading: load, data: userData } = usersApi.useGetUser(state?.pId)
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
       initialValues: {
@@ -137,13 +137,15 @@ const AddUser = () => {
                           </div>
                         </CCol>
                         <CCol md={3}>
-                          <div className="mb-3">
-                            <CFormLabel htmlFor="exampleFormControlInput1">Parent</CFormLabel>
-                            <h3>
-                              {userData.user.firstName} {userData.user.lastName}
-                            </h3>
-                            <h5>{userData.user.uId}</h5>
-                          </div>
+                          {!load && (
+                            <div className="mb-3">
+                              <CFormLabel htmlFor="exampleFormControlInput1">Parent</CFormLabel>
+                              <h3>
+                                {userData?.user?.firstName} {userData?.user?.lastName}
+                              </h3>
+                              <h5>{userData?.user?.uId}</h5>
+                            </div>
+                          )}
                         </CCol>
                         <CCol md={3}>
                           <div className="mb-3">

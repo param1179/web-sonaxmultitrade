@@ -10,7 +10,6 @@ import { CImage } from '@coreui/react'
 function FamilyTree({ count, item, num, StyledNode, pId }) {
   const navigation = useNavigate()
   const { childId, parentId } = item
-
   useEffect(() => {
     count += 1
   }, [])
@@ -25,7 +24,7 @@ function FamilyTree({ count, item, num, StyledNode, pId }) {
             !childId.uId
               ? navigation('/add', {
                   state: {
-                    pId: parentId,
+                    pId: pId,
                     placement: num === 0 ? 'Left' : 'Right',
                   },
                 })
@@ -70,7 +69,7 @@ function FamilyTree({ count, item, num, StyledNode, pId }) {
         return isloading ? (
           <>OK</>
         ) : (
-          <FamilyTree key={n} item={child} num={n} StyledNode={StyledNode} pId={pD} />
+          <FamilyTree key={n} item={child} num={n} StyledNode={StyledNode} pId={pD._id} />
         )
       })
     }
