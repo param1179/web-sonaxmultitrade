@@ -45,6 +45,7 @@ const fetchUsers = async (limit, page, search) =>
 
 const fetchToggleBan = async (id) => await axios.get(`admin/ban/${id}`)
 const fetchPackages = async () => await axios.get(`users/packages`)
+const fetchUser = async (id) => await axios.get(`users/getUser/${id}`)
 const fetchInstallments = async () => await axios.get(`users/installments`)
 
 const fetchDeleteUser = async (id) => await axios.delete(`admin/deleteUser/${id}`)
@@ -213,6 +214,12 @@ export const useGetUsers = (limit, page, search) => {
 
 export const useGetPackages = (limit, page, search) => {
   return useQuery(`users/packages`, () => fetchPackages(), {
+    refetchOnWindowFocus: false,
+  })
+}
+
+export const useGetUser = (id) => {
+  return useQuery(`users/getUser/${id}`, () => id && fetchUser(id), {
     refetchOnWindowFocus: false,
   })
 }
