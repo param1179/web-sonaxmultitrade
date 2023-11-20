@@ -9,7 +9,6 @@ import { CImage } from '@coreui/react'
 
 function FamilyTree({ count, item, num, StyledNode, pId }) {
   const navigation = useNavigate()
-  console.log(item)
   const { childId, parentId } = item
 
   useEffect(() => {

@@ -34,7 +34,6 @@ const AddUser = () => {
   const user = getProfileData()
   const { isLoading, data: packages } = usersApi.useGetPackages()
   const { isLoading: load, data: userData } = usersApi.useGetUser(state.pId)
-  console.log(userData)
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
       initialValues: {
