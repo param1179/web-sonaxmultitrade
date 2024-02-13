@@ -37,7 +37,9 @@ const DashboardAdmin = () => {
   const { isLoading, data: resp, refetch } = adminApi.usePaymentRequests()
   const { isLoading: load, data, refetch: ref } = adminApi.useBusiness(dates)
   const update = adminApi.useUpdatePaymentRequest()
-
+  const totalPrice =
+    !load && data.fresh.length > 0 ? data.fresh.map((item) => Number(item.price)) : [0]
+  const sum = totalPrice.reduce((total, num) => total + num, 0)
   const { values, handleChange, submitForm, errors, isValid, dirty, resetForm, setFieldValue } =
     useFormik({
       initialValues: {
@@ -191,6 +193,76 @@ const DashboardAdmin = () => {
                   />
                 </CCol>
               </CRow>
+            </CCol>
+          </CRow>
+          <CRow>
+            <CCol md={4}>
+              <CWidgetStatsC
+                className="mb-3"
+                icon={<CIcon icon={cilUser} height={36} />}
+                color="info"
+                inverse
+                progress={{ value: 100 }}
+                text="Widget helper text"
+                title="Fresh Business by Month"
+                value={`${sum}`}
+              />
+            </CCol>
+            <CCol md={8}>
+              <CCard>
+                <CCardHeader>
+                  <strong>Transactions</strong>
+                </CCardHeader>
+                <CCardBody>
+                  <CRow className="table-row">
+                    {!load && data?.fresh.length !== 0 ? (
+                      <CTable
+                        align="middle"
+                        bordered
+                        className="mb-0 border"
+                        hover
+                        responsive
+                        striped
+                      >
+                        <CTableHead color="light">
+                          <CTableRow>
+                            <CTableHeaderCell>S. No.</CTableHeaderCell>
+                            <CTableHeaderCell>User Id</CTableHeaderCell>
+                            <CTableHeaderCell>Name</CTableHeaderCell>
+                            <CTableHeaderCell>Payment</CTableHeaderCell>
+                          </CTableRow>
+                        </CTableHead>
+                        <CTableBody>
+                          {data?.fresh.map((item, index) => (
+                            <CTableRow v-for="item in tableItems" key={index}>
+                              <CTableDataCell>{index + 1}</CTableDataCell>
+                              <CTableDataCell>
+                                <div>{item.uId}</div>
+                              </CTableDataCell>
+
+                              <CTableDataCell>
+                                {item.firstName + ' ' + item.lastName}
+                                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                  {`Register on: ${dateHelper.formatRegister(item.createdAt)} `}
+                                </div>
+                              </CTableDataCell>
+
+                              <CTableDataCell>
+                                {item.price}
+                                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                                  {`Paid on: ${dateHelper.formatRegister(item.updatedAt)} `}
+                                </div>
+                              </CTableDataCell>
+                            </CTableRow>
+                          ))}
+                        </CTableBody>
+                      </CTable>
+                    ) : (
+                      <div className="p-3 text-center">History not available</div>
+                    )}
+                  </CRow>
+                </CCardBody>
+              </CCard>
             </CCol>
           </CRow>
           <CCard>
